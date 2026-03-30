@@ -32,13 +32,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION["usuario_tipo"] = $usuario["tipo"];
 
             if ($usuario["tipo"] == "baladeiro") {
-                header("Location: ../frontend/area_baladeiro.php");
+                header("Location: ../frontend/area_baladeiro.html");
             } elseif ($usuario["tipo"] == "gestor") {
-                header("Location: ../frontend/area_gestor.php");
+                header("Location: ../frontend/area_gestor.html");
             } elseif ($usuario["tipo"] == "funcionario") {
-                header("Location: ../frontend/area_funcionario.php");
+                header("Location: ../frontend/area_funcionario.html");
             } elseif ($usuario["tipo"] == "admin") {
-                header("Location: ../frontend/area_admin.php");
+                header("Location: ../frontend/area_admin.html");
             }
             exit();
 

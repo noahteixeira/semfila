@@ -1,3 +1,10 @@
+v1.0.4 | 30/03/2026 - Implementação do CRUD completo para usuários Baladeiro. - LUCAS   
+- Criação da página do baladeiro (area_baladeiro.php).
+- Implementação da página de perfil (perfil_baladeiro.php).
+- Criação da página de edição (editar_baladeiro.php) para atualização de dados pessoais (exceto CPF e email).
+- Implementação da desativação de conta (desativar_conta.php).
+- Criação de CSS para as novas páginas (area_baladeiro.css e perfil.css).
+
 v1.0.3 | 30/03/2026 - Criação das páginas de login e cadastro. - NOAH
 - Separação do projeto em pastas backend e frontend.
 - Criação do backend: conexao.php, login.php, logout.php, auth_check.php e cadastro_baladeiro.php.

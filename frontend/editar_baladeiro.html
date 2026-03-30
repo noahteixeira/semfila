@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SemFila - Editar Dados</title>
+    <link rel="stylesheet" href="css/cadastro.css">
+</head>
+<body>
+
+    <div class="container-cadastro">
+        <h1>Editar Dados</h1>
+
+        <div id="msg-erro" class="msg-erro" style="display: none;"></div>
+        <div id="msg-sucesso" class="msg-sucesso" style="display: none;">
+            Dados atualizados com sucesso!
+        </div>
+
+        <form action="../backend/editar_baladeiro.php" method="POST" enctype="multipart/form-data" id="form-cadastro">
+
+            <label for="nome">Nome completo</label>
+            <input type="text" id="nome" name="nome" placeholder="Seu nome completo" required>
+
+            <label for="data_nascimento">Data de nascimento</label>
+            <input type="date" id="data_nascimento" name="data_nascimento" required>
+
+            <label for="senha">Nova senha (deixe em branco para manter)</label>
+            <input type="password" id="senha" name="senha" placeholder="Digite nova senha">
+
+            <label for="confirmar_senha">Confirmar nova senha</label>
+            <input type="password" id="confirmar_senha" name="confirmar_senha" placeholder="Repita nova senha">
+
+            <label for="foto_perfil">Nova foto de perfil (JPG ou PNG, máx 2MB)</label>
+            <input type="file" id="foto_perfil" name="foto_perfil" accept=".jpg,.jpeg,.png">
+
+            <label for="documento">Novo documento (JPG, PNG ou PDF, máx 5MB)</label>
+            <input type="file" id="documento" name="documento" accept=".jpg,.jpeg,.png,.pdf">
+
+            <button type="submit">Atualizar</button>
+        </form>
+
+        <p class="link-login"><a href="area_baladeiro.html">Voltar</a></p>
+    </div>
+
+    <script src="js/editar.js"></script>
+</body>
+</html>
