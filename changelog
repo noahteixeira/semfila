@@ -1,2 +1,12 @@
-v1.0.0 | 24/03/2026 - Criação do repositório e inicio do desenvolvimento.
+v1.0.2 | 30/03/2026 - Melhoria do banco de dados do sistema. - NOAH
+- Complemento do arquivo database.sql.
+- Definição de 5 tabelas: ingressos_lotes, ingressos, entradas, consumos_bar e itens_consumo.
+- Configuração de chaves primárias, chaves estrangeiras, constraints UNIQUE e valores padrão.
+
+v1.0.1 | 30/03/2026 - Criação do banco de dados do sistema. - LUCAS
+- Criação do arquivo database.sql.
+- Definição de 5 tabelas: usuarios, contratos_gestores, baladas, pulseiras e eventos.
+- Configuração de chaves primárias, chaves estrangeiras, constraints UNIQUE e valores padrão.
+
+v1.0.0 | 24/03/2026 - Criação do repositório e inicio do desenvolvimento. - NOAH
 - Criação e organização das branches principais (main e develop), e das branches filhas para cada membro do grupo.
