@@ -42,6 +42,15 @@ body {
     font-size: 14px;
 }
 
+.msg-sucesso {
+    background-color: #2ecc7133;
+    color: #2ecc71;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
 label {
     display: block;
     text-align: left;
