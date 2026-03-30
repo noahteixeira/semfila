@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SemFila - Login</title>
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+
+    <div class="container-login">
+        <img src="assets/logo.png" alt="SemFila" class="logo">
+        <p>Faça login para continuar</p>
+
+        <div id="msg-erro" class="msg-erro" style="display: none;">
+            E-mail ou senha incorretos.
+        </div>
+
+        <form action="../backend/login.php" method="POST">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" name="email" placeholder="seu@email.com" required>
+
+            <label for="senha">Senha</label>
+            <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+
+            <button type="submit">Entrar</button>
+        </form>
+
+        <p class="link-cadastro">Não tem conta? <a href="cadastro_baladeiro.html">Cadastre-se</a></p>
+    </div>
+
+    <script src="js/login.js"></script>
+</body>
+</html>

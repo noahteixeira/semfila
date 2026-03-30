@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SemFila - Cadastro</title>
+    <link rel="stylesheet" href="css/cadastro.css">
+</head>
+<body>
+
+    <div class="container-cadastro">
+        <img src="assets/logo.png" alt="SemFila" class="logo">
+        <p>Crie sua conta</p>
+
+        <div id="msg-erro" class="msg-erro" style="display: none;"></div>
+        <div id="msg-sucesso" class="msg-sucesso" style="display: none;">
+            Conta criada com sucesso! <a href="login.html">Fazer login</a>
+        </div>
+
+        <form action="../backend/cadastro_baladeiro.php" method="POST" enctype="multipart/form-data" id="form-cadastro">
+
+            <label for="nome">Nome completo</label>
+            <input type="text" id="nome" name="nome" placeholder="Seu nome completo" required>
+
+            <label for="email">E-mail</label>
+            <input type="email" id="email" name="email" placeholder="seu@email.com" required>
+
+            <label for="cpf">CPF</label>
+            <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00" maxlength="14" required>
+
+            <label for="data_nascimento">Data de nascimento</label>
+            <input type="date" id="data_nascimento" name="data_nascimento" required>
+
+            <label for="senha">Senha (mínimo 6 caracteres)</label>
+            <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+
+            <label for="confirmar_senha">Confirmar senha</label>
+            <input type="password" id="confirmar_senha" name="confirmar_senha" placeholder="Repita sua senha" required>
+
+            <label for="foto_perfil">Foto de perfil (JPG ou PNG, máx 2MB)</label>
+            <input type="file" id="foto_perfil" name="foto_perfil" accept=".jpg,.jpeg,.png">
+
+            <label for="documento">Documento RG ou CNH (JPG, PNG ou PDF, máx 5MB)</label>
+            <input type="file" id="documento" name="documento" accept=".jpg,.jpeg,.png,.pdf">
+
+            <button type="submit">Cadastrar</button>
+        </form>
+
+        <p class="link-login">Já tem conta? <a href="login.html">Fazer login</a></p>
+    </div>
+
+    <script src="js/cadastro.js"></script>
+</body>
+</html>

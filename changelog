@@ -1,3 +1,12 @@
+v1.0.3 | 30/03/2026 - Criação das páginas de login e cadastro. - NOAH
+- Separação do projeto em pastas backend e frontend.
+- Criação do backend: conexao.php, login.php, logout.php, auth_check.php e cadastro_baladeiro.php.
+- Criação do frontend: login.html e cadastro_baladeiro.html com CSS e JS.
+- Implementação de login com sessão e redirecionamento por tipo de usuário.
+- Implementação de cadastro de baladeiro com upload de foto e documento.
+- Adição da logo nas páginas.
+- Criação do .gitignore para ignorar a pasta uploads.
+
 v1.0.2 | 30/03/2026 - Melhoria do banco de dados do sistema. - NOAH
 - Complemento do arquivo database.sql.
 - Definição de 5 tabelas: ingressos_lotes, ingressos, entradas, consumos_bar e itens_consumo.
