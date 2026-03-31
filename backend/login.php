@@ -27,6 +27,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if (password_verify($senha, $usuario["senha"])) {
 
+            // verificar contrato do gestor antes de permitir login
+            if ($usuario["tipo"] == "gestor") {
+                $sql_contrato = "SELECT status, data_vencimento FROM contratos_gestores WHERE usuario_id = ?";
+                $stmt_contrato = mysqli_prepare($conexao, $sql_contrato);
+                mysqli_stmt_bind_param($stmt_contrato, "i", $usuario["id"]);
+                mysqli_stmt_execute($stmt_contrato);
+                $resultado_contrato = mysqli_stmt_get_result($stmt_contrato);
+                $contrato = mysqli_fetch_assoc($resultado_contrato);
+                mysqli_stmt_close($stmt_contrato);
+
+                if (!$contrato || $contrato["status"] == "inativo" || $contrato["data_vencimento"] < date("Y-m-d")) {
+                    header("Location: ../frontend/login.html?erro=1");
+                    exit();
+                }
+            }
+
             $_SESSION["usuario_id"] = $usuario["id"];
             $_SESSION["usuario_nome"] = $usuario["nome"];
             $_SESSION["usuario_tipo"] = $usuario["tipo"];

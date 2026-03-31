@@ -85,44 +85,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $documento_url = "uploads/documentos/" . $nome_arquivo;
     }
 
-    // atualizar dados
-    $sql = "UPDATE usuarios SET nome = ?, data_nascimento = ?";
-    $params = [$nome, $data_nascimento];
-    $types = "ss";
+    // atualizar dados basicos
+    $sql = "UPDATE usuarios SET nome = ?, data_nascimento = ? WHERE id = ?";
+    $stmt = mysqli_prepare($conexao, $sql);
+    mysqli_stmt_bind_param($stmt, "ssi", $nome, $data_nascimento, $_SESSION["usuario_id"]);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
 
+    // atualizar senha se informada
     if (!empty($senha)) {
         $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
-        $sql .= ", senha = ?";
-        $params[] = $senha_hash;
-        $types .= "s";
+        $sql_senha = "UPDATE usuarios SET senha = ? WHERE id = ?";
+        $stmt_senha = mysqli_prepare($conexao, $sql_senha);
+        mysqli_stmt_bind_param($stmt_senha, "si", $senha_hash, $_SESSION["usuario_id"]);
+        mysqli_stmt_execute($stmt_senha);
+        mysqli_stmt_close($stmt_senha);
     }
 
+    // atualizar foto se enviada
     if ($foto_perfil) {
-        $sql .= ", foto_perfil = ?";
-        $params[] = $foto_perfil;
-        $types .= "s";
+        $sql_foto = "UPDATE usuarios SET foto_perfil = ? WHERE id = ?";
+        $stmt_foto = mysqli_prepare($conexao, $sql_foto);
+        mysqli_stmt_bind_param($stmt_foto, "si", $foto_perfil, $_SESSION["usuario_id"]);
+        mysqli_stmt_execute($stmt_foto);
+        mysqli_stmt_close($stmt_foto);
     }
 
+    // atualizar documento se enviado
     if ($documento_url) {
-        $sql .= ", documento_url = ?";
-        $params[] = $documento_url;
-        $types .= "s";
+        $sql_doc = "UPDATE usuarios SET documento_url = ? WHERE id = ?";
+        $stmt_doc = mysqli_prepare($conexao, $sql_doc);
+        mysqli_stmt_bind_param($stmt_doc, "si", $documento_url, $_SESSION["usuario_id"]);
+        mysqli_stmt_execute($stmt_doc);
+        mysqli_stmt_close($stmt_doc);
     }
 
-    $sql .= " WHERE id = ?";
-    $params[] = $_SESSION["usuario_id"];
-    $types .= "i";
-
-    $stmt = mysqli_prepare($conexao, $sql);
-    mysqli_stmt_bind_param($stmt, $types, ...$params);
-
-    if (mysqli_stmt_execute($stmt)) {
-        header("Location: ../frontend/editar_baladeiro.html?sucesso=1");
-    } else {
-        header("Location: ../frontend/editar_baladeiro.html?erro=5");
-    }
-
-    mysqli_stmt_close($stmt);
+    header("Location: ../frontend/editar_baladeiro.html?sucesso=1");
     mysqli_close($conexao);
     exit();
 

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SemFila - Gestores</title>
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+    <div class="container">
+        <img src="assets/logo.png" alt="SemFila" class="logo">
+        <h2>Gestores Cadastrados</h2>
+
+        <div id="msg-sucesso" class="msg-sucesso" style="display: none;">Gestor desativado com sucesso.</div>
+
+        <div id="tabela-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>E-mail</th>
+                        <th>CNPJ</th>
+                        <th>Razão Social</th>
+                        <th>Vencimento</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="lista-gestores">
+                </tbody>
+            </table>
+        </div>
+
+        <p id="msg-vazio" style="display: none; color: #a0a0b0;">Nenhum gestor cadastrado.</p>
+
+        <div class="menu">
+            <a href="cadastrar_gestor.html" class="btn">Cadastrar Gestor</a>
+            <a href="area_admin.html" class="btn">Voltar</a>
+        </div>
+    </div>
+
+    <script src="js/listar_gestores.js"></script>
+</body>
+</html>
