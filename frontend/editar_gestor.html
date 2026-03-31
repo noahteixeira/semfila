@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SemFila - Editar Gestor</title>
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+    <div class="container">
+        <img src="assets/logo.png" alt="SemFila" class="logo">
+        <h2>Editar Gestor</h2>
+
+        <div id="msg-erro" class="msg-erro" style="display: none;"></div>
+        <div id="msg-sucesso" class="msg-sucesso" style="display: none;">Gestor atualizado com sucesso.</div>
+
+        <form action="../backend/editar_gestor.php" method="POST" id="form-editar">
+            <input type="hidden" id="id" name="id">
+
+            <label for="nome">Nome do Gestor</label>
+            <input type="text" id="nome" name="nome" required>
+
+            <label for="email">E-mail</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="cnpj">CNPJ</label>
+            <input type="text" id="cnpj" name="cnpj" maxlength="18" required>
+
+            <label for="razao_social">Razão Social</label>
+            <input type="text" id="razao_social" name="razao_social" required>
+
+            <label for="data_inicio">Data de Início do Contrato</label>
+            <input type="date" id="data_inicio" name="data_inicio" required>
+
+            <label for="data_vencimento">Data de Vencimento do Contrato</label>
+            <input type="date" id="data_vencimento" name="data_vencimento" required>
+
+            <label for="status">Status do Contrato</label>
+            <select id="status" name="status">
+                <option value="ativo">Ativo</option>
+                <option value="inativo">Inativo</option>
+            </select>
+
+            <label for="observacoes">Observações</label>
+            <textarea id="observacoes" name="observacoes"></textarea>
+
+            <button type="submit">Salvar Alterações</button>
+        </form>
+
+        <div class="menu">
+            <a href="listar_gestores.html" class="btn">Voltar à lista</a>
+            <a href="area_admin.html" class="btn">Painel Admin</a>
+        </div>
+    </div>
+
+    <script src="js/editar_gestor.js"></script>
+</body>
+</html>
