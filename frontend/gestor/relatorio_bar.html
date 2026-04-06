@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SemFila - Relatório do Bar</title>
+    <link rel="stylesheet" href="../css/gestor.css">
+</head>
+<body>
+
+    <div class="container">
+        <img src="../assets/logo.png" alt="SemFila" class="logo">
+        <h2>Relatório de Consumo do Bar</h2>
+        <p class="descricao">Veja os consumos registrados para um evento.</p>
+
+        <div class="filtro">
+            <label for="evento-select">Selecione o Evento:</label>
+            <select id="evento-select">
+                <!-- Eventos serão carregados aqui -->
+            </select>
+            <button id="carregar-btn">Carregar Relatório</button>
+        </div>
+
+        <div id="relatorio">
+            <!-- Relatório será carregado aqui -->
+        </div>
+
+        <div class="menu">
+            <a href="../area_gestor.html" class="btn">Voltar</a>
+        </div>
+    </div>
+
+    <script src="../js/relatorio_bar.js"></script>
+</body>
+</html>

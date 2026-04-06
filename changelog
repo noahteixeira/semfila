@@ -1,3 +1,11 @@
+v1.1.1 | 06/04/2026 - Sistema de consumo no bar. - LUCAS
+- Adicionadas tabelas consumos_bar e itens_consumo no banco de dados.
+- Funcionário: tela principal do bar com identificação por RFID, adição de produtos e confirmação de venda.
+- Backend: registrar_consumo.php para debitar saldo e salvar consumo em transação.
+- Gestor: relatório de consumo do evento.
+- Baladeiro: histórico de consumo pessoal.
+- Produtos cadastrados de forma simples (nome + preço fixo).
+
 v1.1.0 | 05/04/2026 - Página de ingressos comprados. - LUCAS
 - Adicionada página de "Meus Ingressos" para baladeiros verem ingressos adquiridos.
 - Criação de backend para listar ingressos do usuário logado com dados de evento, lote, QR Code e status.
