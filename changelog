@@ -1,3 +1,6 @@
+v1.0.6 | 05/04/2026 - Implementação do controle de fila. - GUSTAVO
+- Criação da página controle_fila.html para interface de controle de entrada na fila.
+
 v1.0.5 | 31/03/2026 - Implementação do CRUD de Gestores e reestruturação de pastas. - NOAH
 - Implementação do CRUD de gestores (cadastrar, listar, editar, desativar).
 - Backend: cadastrar_gestor.php, listar_gestores.php, editar_gestor.php, desativar_gestor.php.
