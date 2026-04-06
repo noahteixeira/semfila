@@ -33,7 +33,7 @@ fetch("../backend/listar_funcionarios.php")
             // acoes
             var acoes = '<a href="editar_funcionario.html?id=' + f.id + '" class="btn-acao btn-editar">Editar</a>';
             if (f.ativo == 1) {
-                acoes += ' <a href="../backend/desativar_funcionario.php?id=' + f.id + '" class="btn-acao btn-desativar" onclick="return confirm(\'Desativar este funcionário?\')">Desativar</a>';
+                acoes += ' <a href="#" class="btn-acao btn-desativar" onclick="return confirmarDesativar(' + f.id + ')">Desativar</a>';
             }
 
             tr.innerHTML = '<td>' + f.nome + '</td>' +
@@ -48,3 +48,21 @@ fetch("../backend/listar_funcionarios.php")
     .catch(function (error) {
         console.error("Erro ao carregar funcionários:", error);
     });
+
+function confirmarDesativar(id) {
+    if (confirm("Desativar este funcionário?")) {
+        var form = document.createElement("form");
+        form.method = "POST";
+        form.action = "../backend/desativar_funcionario.php";
+
+        var inputId = document.createElement("input");
+        inputId.type = "hidden";
+        inputId.name = "id";
+        inputId.value = id;
+        form.appendChild(inputId);
+
+        document.body.appendChild(form);
+        form.submit();
+    }
+    return false;
+}

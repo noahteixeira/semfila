@@ -1,3 +1,11 @@
+v1.2.1 | 06/04/2026 - Correções nos CRUDs 8 e 9. - NOAH
+- Corrigido cadastrar_funcionario.php para retornar em JSON ao invés de redirecionar com senha na URL.
+- Adicionada busca por RFID de pulseira em validar_entrada.php (antes era apenas por QR Code).
+- Adicionada verificação de status do ingresso antes de atualizar em registrar_entrada.php.
+- Adicionada transação (begin_transaction/commit) em registrar_entrada.php para garantir consistência.
+- Campo metodo agora busca por qr_code ou rfid.
+- Corrigido desativar_funcionario.php para usar POST ao invés de GET.
+
 v1.2.0 | 06/04/2026 - CRUD de Funcionários e Controle de Acesso / Entradas. - JEHAD
 - Implementação do CRUD de Funcionários: gestores podem cadastrar, listar, editar e desativar funcionários.
 - Backend: cadastrar_funcionario.php, listar_funcionarios.php, editar_funcionario.php, desativar_funcionario.php.

@@ -15,7 +15,7 @@ buscarBtn.addEventListener("click", function() {
         return;
     }
 
-    fetch("../backend/validar_entrada.php?qr_code=" + encodeURIComponent(qrCode))
+    fetch("../backend/validar_entrada.php?codigo=" + encodeURIComponent(qrCode))
         .then(function(response) { return response.json(); })
         .then(function(data) {
             if (data.erro) {
@@ -54,6 +54,7 @@ liberarBtn.addEventListener("click", function() {
     var formData = new FormData();
     formData.append("ingresso_id", ingressoAtual.ingresso_id);
     formData.append("evento_id", ingressoAtual.evento_id);
+    formData.append("metodo", ingressoAtual.metodo);
 
     fetch("../backend/registrar_entrada.php", {
         method: "POST",
