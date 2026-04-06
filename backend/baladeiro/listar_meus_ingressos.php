@@ -1,8 +1,10 @@
 <?php
+header('Content-Type: application/json; charset=utf-8');
+ini_set('display_errors', 0);
 include("../auth_check.php");
 include("../conexao.php");
 
-if ($_SESSION["usuario_tipo"] != "baladeiro") {
+if (!isset($_SESSION["usuario_id"]) || $_SESSION["usuario_tipo"] != "baladeiro") {
     echo json_encode(["erro" => "Acesso negado"]);
     exit();
 }

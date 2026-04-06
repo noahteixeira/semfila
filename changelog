@@ -1,3 +1,26 @@
+v1.1.0 | 05/04/2026 - Página de ingressos comprados. - LUCAS
+- Adicionada página de "Meus Ingressos" para baladeiros verem ingressos adquiridos.
+- Criação de backend para listar ingressos do usuário logado com dados de evento, lote, QR Code e status.
+- Links de navegação incluídos em área do baladeiro, perfil e lista de eventos.
+
+v1.0.9 | 05/04/2026 - CRUD de Changelog. - LUCAS
+- Criada tabela changelogs no banco de dados.
+- Backend: endpoints para listar, criar, editar e excluir changelogs.
+- Frontend: páginas de listagem, criação e edição de changelog.
+- Autor agora é definido automaticamente pelo usuário logado no sistema.
+
+v1.0.8 | 05/04/2026 - Carrinho de ingressos. - LUCAS
+- Adicionada página de carrinho para revisar ingressos antes da compra.
+- Itens do carrinho armazenados em localStorage para persistência temporária.
+- Compra pode ser feita direto ou por finalização em lote via backend.
+- Badge de carrinho aparece em ver_eventos e comprar_ingresso.
+
+v1.0.7 | 05/04/2026 - CRUD de eventos. - LUCAS
+- Gestores podem criar, editar e encerrar eventos de sua balada.
+- Baladeiros veem apenas eventos com status ativo.
+- Inclui frontend e backend completos para gestão de eventos.
+
+
 v1.0.6 | 05/04/2026 - Implementação do controle de fila. - GUSTAVO
 - Criação da página controle_fila.html para interface de controle de entrada na fila.
 

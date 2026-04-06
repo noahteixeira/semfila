@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
             return response.json();
         })
         .then(function (data) {
+            console.log('meus ingressos response:', data);
             var container = document.getElementById('lista-ingressos');
 
             if (data.erro) {
@@ -12,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             if (!data.ingressos || data.ingressos.length === 0) {
-                container.innerHTML = '<p style="color: #ccc;">Você ainda não comprou nenhum ingresso.</p>';
+                container.innerHTML = '<p style="color: #ccc;">Nenhum ingresso encontrado. Verifique se a compra foi concluída corretamente.</p>';
                 return;
             }
 
@@ -20,14 +21,14 @@ document.addEventListener('DOMContentLoaded', function () {
             data.ingressos.forEach(function (ingresso) {
                 var card = document.createElement('div');
                 card.className = 'card-ingresso';
-                card.innerHTML = '
-                    <h3>' + escapeHtml(ingresso.evento_nome) + '</h3>
-                    <p><strong>Lote:</strong> ' + escapeHtml(ingresso.nome_lote) + '</p>
-                    <p><strong>QR Code:</strong> ' + escapeHtml(ingresso.qr_code) + '</p>
-                    <p><strong>Data do evento:</strong> ' + formatDate(ingresso.data_evento) + ' às ' + escapeHtml(ingresso.horario_abertura) + '</p>
-                    <p><strong>Comprado em:</strong> ' + formatDateTime(ingresso.comprado_em) + '</p>
-                    <p><strong>Status:</strong> <span class="status-' + ingresso.status + '">' + escapeHtml(capitalize(ingresso.status)) + '</span></p>
-                ';
+                card.innerHTML = `
+                    <h3>${escapeHtml(ingresso.evento_nome)}</h3>
+                    <p><strong>Lote:</strong> ${escapeHtml(ingresso.nome_lote)}</p>
+                    <p><strong>QR Code:</strong> ${escapeHtml(ingresso.qr_code)}</p>
+                    <p><strong>Data do evento:</strong> ${formatDate(ingresso.data_evento)} às ${escapeHtml(ingresso.horario_abertura)}</p>
+                    <p><strong>Comprado em:</strong> ${formatDateTime(ingresso.comprado_em)}</p>
+                    <p><strong>Status:</strong> <span class="status-${ingresso.status}">${escapeHtml(capitalize(ingresso.status))}</span></p>
+                `;
                 container.appendChild(card);
             });
         })
