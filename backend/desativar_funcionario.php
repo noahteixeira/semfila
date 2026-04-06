@@ -7,9 +7,9 @@ if ($_SESSION["usuario_tipo"] != "gestor") {
     exit();
 }
 
-if (isset($_GET["id"])) {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
 
-    $id = intval($_GET["id"]);
+    $id = intval($_POST["id"]);
 
     // verificar se gestor tem balada
     $sql_balada = "SELECT id FROM baladas WHERE gestor_id = ? AND ativo = 1";
