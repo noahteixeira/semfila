@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SemFila - Editar Funcionário</title>
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+    <div class="container">
+        <img src="assets/logo.png" alt="SemFila" class="logo">
+        <h2>Editar Funcionário</h2>
+
+        <div id="msg-erro" class="msg-erro" style="display: none;"></div>
+        <div id="msg-sucesso" class="msg-sucesso" style="display: none;">Funcionário atualizado com sucesso.</div>
+
+        <form action="../backend/editar_funcionario.php" method="POST" id="form-editar">
+            <input type="hidden" id="id" name="id">
+
+            <label for="nome">Nome do Funcionário</label>
+            <input type="text" id="nome" name="nome" required>
+
+            <label for="email">E-mail</label>
+            <input type="email" id="email" name="email" required>
+
+            <button type="submit">Salvar Alterações</button>
+        </form>
+
+        <div class="menu">
+            <a href="listar_funcionarios.html" class="btn">Voltar à lista</a>
+            <a href="area_gestor.html" class="btn">Painel Gestor</a>
+        </div>
+    </div>
+
+    <script src="js/editar_funcionario.js"></script>
+</body>
+</html>

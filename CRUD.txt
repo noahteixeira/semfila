@@ -1,0 +1,451 @@
+================================================================
+  SEMFILA - LISTA COMPLETA DE CRUDs
+  Sistema de Gerenciamento de Eventos e Controle de Acesso
+================================================================
+
+Total de CRUDs: 11
+Stack: HTML + CSS + JavaScript + PHP + MySQL
+
+----------------------------------------------------------------
+LEGENDA DE STATUS (para uso da equipe):
+[ ] Nao iniciado
+[~] Em andamento
+[x] Concluido
+----------------------------------------------------------------
+
+
+================================================================
+  CRUD 01 - USUARIOS (Baladeiro)
+================================================================
+Tabela principal: usuarios
+Sprint: 01
+
+CAMPOS:
+  - id (PK, auto increment)
+  - nome
+  - email (unico)
+  - senha (hash com password_hash)
+  - cpf (unico)
+  - data_nascimento
+  - foto_perfil (caminho do arquivo)
+  - documento_url (caminho do arquivo - RG ou CNH)
+  - tipo (fixo: 'baladeiro')
+  - criado_em (timestamp)
+
+OPERACOES:
+  [C] CREATE  - Formulario de cadastro com upload de foto e documento
+  [R] READ    - Tela de perfil do baladeiro (area do usuario)
+  [U] UPDATE  - Formulario de edicao de dados pessoais (exceto CPF e email)
+  [D] DELETE  - Desativar conta (soft delete: campo ativo = 0)
+
+ARQUIVOS SUGERIDOS:
+  - cadastro_baladeiro.php  (formulario + processamento)
+  - perfil_baladeiro.php    (visualizacao dos dados)
+  - editar_baladeiro.php    (formulario de edicao)
+  - desativar_conta.php     (acao de desativacao)
+
+REGRAS:
+  - Calcular idade a partir de data_nascimento (minimo 16 anos para se cadastrar)
+  - Upload de foto: aceitar JPG e PNG, max 2MB
+  - Upload de documento: aceitar JPG, PNG e PDF, max 5MB
+  - Senha deve ter no minimo 6 caracteres
+  - Email deve ser unico no banco
+
+
+================================================================
+  CRUD 02 - LOGIN / AUTENTICACAO (Todos os perfis)
+================================================================
+Tabela principal: usuarios
+Sprint: 01
+
+CAMPOS USADOS:
+  - email
+  - senha
+  - tipo (redireciona para a area correta)
+
+OPERACOES:
+  [C] CREATE  - Iniciar sessao (session_start, guardar id e tipo do usuario)
+  [R] READ    - Verificar se sessao esta ativa (checar em todas as paginas protegidas)
+  [U] UPDATE  - (nao se aplica diretamente)
+  [D] DELETE  - Logout (destruir sessao)
+
+ARQUIVOS SUGERIDOS:
+  - login.php      (formulario + verificacao de credenciais)
+  - logout.php     (destroi sessao e redireciona)
+  - auth_check.php (include em todas as paginas protegidas para checar sessao)
+
+REGRAS:
+  - Redirecionar apos login conforme tipo:
+      baladeiro   -> area_baladeiro.php
+      gestor      -> area_gestor.php
+      funcionario -> area_funcionario.php
+      admin       -> area_admin.php
+  - Bloquear acesso a paginas protegidas sem sessao ativa
+  - Mostrar mensagem de erro generica (nao informar se e o email ou senha que esta errado)
+
+
+================================================================
+  CRUD 03 - GESTORES DE BALADA (pelo Administrador)
+================================================================
+Tabela principal: usuarios + contratos_gestores
+Sprint: 01
+
+CAMPOS - usuarios:
+  - id, nome, email, senha, tipo (fixo: 'gestor'), criado_em
+
+CAMPOS - contratos_gestores:
+  - id (PK)
+  - usuario_id (FK -> usuarios.id)
+  - cnpj (unico)
+  - razao_social
+  - data_inicio
+  - data_vencimento
+  - status (ativo / inativo)
+  - observacoes
+
+OPERACOES:
+  [C] CREATE  - Admin cadastra novo gestor + dados do contrato
+  [R] READ    - Admin lista todos os gestores e seus contratos
+  [U] UPDATE  - Admin edita dados do gestor ou renova/altera contrato
+  [D] DELETE  - Admin desativa gestor (status = inativo no contrato)
+
+ARQUIVOS SUGERIDOS:
+  - admin/cadastrar_gestor.php
+  - admin/listar_gestores.php
+  - admin/editar_gestor.php
+  - admin/desativar_gestor.php
+
+REGRAS:
+  - CNPJ deve ser unico no banco
+  - Validar formato de CNPJ (14 digitos numericos)
+  - Ao cadastrar gestor, criar registro em 'usuarios' E em 'contratos_gestores'
+  - Gestor com contrato vencido nao consegue fazer login (checar data_vencimento no auth_check.php)
+  - A senha inicial do gestor e gerada automaticamente e enviada por e-mail (simulado: exibir na tela)
+
+
+================================================================
+  CRUD 04 - BALADAS (pelo Gestor)
+================================================================
+Tabela principal: baladas
+Sprint: 01
+
+CAMPOS:
+  - id (PK)
+  - gestor_id (FK -> usuarios.id)
+  - nome
+  - cnpj
+  - endereco
+  - cidade
+  - capacidade_maxima
+  - logo_url (caminho do arquivo)
+  - criado_em
+
+OPERACOES:
+  [C] CREATE  - Gestor cadastra sua balada com logo
+  [R] READ    - Gestor visualiza os dados da balada (area da balada)
+  [U] UPDATE  - Gestor edita informacoes da balada
+  [D] DELETE  - Desativar balada (soft delete)
+
+ARQUIVOS SUGERIDOS:
+  - gestor/cadastrar_balada.php
+  - gestor/ver_balada.php
+  - gestor/editar_balada.php
+  - gestor/desativar_balada.php
+
+REGRAS:
+  - Um gestor pode ter apenas uma balada cadastrada (simplificacao academica)
+  - Upload de logo: aceitar JPG e PNG, max 2MB
+  - CNPJ da balada deve ser o mesmo vinculado ao contrato do gestor
+
+
+================================================================
+  CRUD 05 - PULSEIRAS / TAGS RFID
+================================================================
+Tabela principal: pulseiras
+Sprint: 02
+
+CAMPOS:
+  - id (PK)
+  - usuario_id (FK -> usuarios.id, unico)
+  - codigo_rfid (unico - simulado por texto)
+  - saldo (decimal, default 0.00)
+  - status (ativa / inativa)
+  - assinatura_inicio (date)
+  - assinatura_fim (date)
+  - criado_em
+
+OPERACOES:
+  [C] CREATE  - Baladeiro assina a pulseira (R$ 19,90/mes); sistema gera codigo RFID simulado
+  [R] READ    - Baladeiro visualiza saldo e status da pulseira na area do usuario
+  [U] UPDATE  - Adicionar saldo | Renovar assinatura | Ativar/desativar pulseira
+  [D] DELETE  - Cancelar pulseira (status = inativa, saldo zerado)
+
+ARQUIVOS SUGERIDOS:
+  - baladeiro/assinar_pulseira.php
+  - baladeiro/ver_pulseira.php
+  - baladeiro/adicionar_saldo.php
+  - baladeiro/cancelar_pulseira.php
+
+REGRAS:
+  - Cada usuario pode ter apenas uma pulseira
+  - Codigo RFID e gerado automaticamente pelo sistema (ex: uniqid())
+  - A pulseira so funciona enquanto status = 'ativa' E data atual <= assinatura_fim
+  - Saldo nao pode ficar negativo
+  - Ao cancelar, zerar o saldo (saldo nao e reembolsavel - simplificacao academica)
+  - Valor da mensalidade: R$ 19,90 (pagamento simulado)
+
+
+================================================================
+  CRUD 06 - EVENTOS
+================================================================
+Tabela principal: eventos
+Sprint: 02
+
+CAMPOS:
+  - id (PK)
+  - balada_id (FK -> baladas.id)
+  - nome
+  - descricao
+  - data_evento (date)
+  - horario_abertura (time)
+  - idade_minima (int, default 18)
+  - capacidade_maxima (int)
+  - status (ativo / encerrado / cancelado)
+  - criado_em
+
+OPERACOES:
+  [C] CREATE  - Gestor cria novo evento para sua balada
+  [R] READ    - Gestor visualiza seus eventos | Baladeiro visualiza eventos disponiveis
+  [U] UPDATE  - Gestor edita informacoes do evento
+  [D] DELETE  - Gestor cancela/encerra evento (status = cancelado)
+
+ARQUIVOS SUGERIDOS:
+  - gestor/criar_evento.php
+  - gestor/listar_eventos.php
+  - gestor/editar_evento.php
+  - gestor/encerrar_evento.php
+  - baladeiro/ver_eventos.php  (lista publica de eventos ativos)
+
+REGRAS:
+  - So e possivel criar evento se o gestor tiver uma balada cadastrada
+  - Data do evento nao pode ser no passado
+  - Evento so aparece para baladeiros se status = 'ativo'
+  - Ao encerrar, nao permite mais venda de ingressos
+
+
+================================================================
+  CRUD 07 - INGRESSOS (Lotes e Compra)
+================================================================
+Tabelas: ingressos_lotes + ingressos
+Sprint: 02
+
+CAMPOS - ingressos_lotes:
+  - id (PK)
+  - evento_id (FK -> eventos.id)
+  - nome_lote (ex: "1o Lote", "VIP")
+  - preco (decimal)
+  - taxa_plataforma (decimal - valor em R$ ou percentual)
+  - quantidade_total (int)
+  - quantidade_vendida (int, default 0)
+  - ativo (boolean)
+
+CAMPOS - ingressos:
+  - id (PK)
+  - lote_id (FK -> ingressos_lotes.id)
+  - usuario_id (FK -> usuarios.id)
+  - qr_code (string unica gerada pelo sistema)
+  - pulseira_id (FK -> pulseiras.id, nullable)
+  - status (disponivel / utilizado / cancelado)
+  - comprado_em (timestamp)
+
+OPERACOES:
+  [C] CREATE  - Gestor cria lote de ingressos | Baladeiro compra ingresso (gera registro em 'ingressos')
+  [R] READ    - Gestor ve lotes e vendas | Baladeiro ve seus ingressos com QR Code
+  [U] UPDATE  - Gestor edita lote (preco, quantidade) | Sistema vincula pulseira ao ingresso automaticamente
+  [D] DELETE  - Gestor desativa lote | Baladeiro cancela ingresso (status = cancelado)
+
+ARQUIVOS SUGERIDOS:
+  - gestor/criar_lote.php
+  - gestor/listar_lotes.php
+  - gestor/editar_lote.php
+  - baladeiro/comprar_ingresso.php
+  - baladeiro/meus_ingressos.php
+  - baladeiro/ver_qrcode.php  (exibe QR Code do ingresso)
+
+REGRAS:
+  - QR Code gerado com uniqid() ou md5(id + timestamp) - deve ser unico
+  - Ao comprar, verificar se ainda ha quantidade disponivel no lote
+  - Se usuario tiver pulseira ativa, vincular automaticamente (pulseira_id = pulseira do usuario)
+  - Ingresso utilizado nao pode ser cancelado
+  - Preco final = preco do lote + taxa_plataforma
+  - Pagamento simulado (botao "Confirmar Pagamento" sem gateway real)
+
+
+================================================================
+  CRUD 08 - FUNCIONARIOS (pelo Gestor)
+================================================================
+Tabela principal: usuarios
+Sprint: 02 / 03
+
+CAMPOS (mesmo da tabela usuarios, com tipo = 'funcionario'):
+  - id, nome, email, senha, tipo (fixo: 'funcionario'), balada_id (FK), criado_em
+
+OPERACOES:
+  [C] CREATE  - Gestor cadastra funcionario e vincula a sua balada
+  [R] READ    - Gestor lista funcionarios da sua balada
+  [U] UPDATE  - Gestor edita dados do funcionario (nome, email, senha)
+  [D] DELETE  - Gestor desativa funcionario (soft delete)
+
+ARQUIVOS SUGERIDOS:
+  - gestor/cadastrar_funcionario.php
+  - gestor/listar_funcionarios.php
+  - gestor/editar_funcionario.php
+  - gestor/desativar_funcionario.php
+
+REGRAS:
+  - Funcionario so tem acesso as funcionalidades operacionais (entrada e bar)
+  - Gestor so ve e gerencia funcionarios da sua propria balada
+  - Senha inicial gerada automaticamente (exibir na tela apos cadastro)
+
+
+================================================================
+  CRUD 09 - CONTROLE DE ACESSO / ENTRADAS
+================================================================
+Tabela principal: entradas
+Sprint: 03
+
+CAMPOS:
+  - id (PK)
+  - evento_id (FK -> eventos.id)
+  - ingresso_id (FK -> ingressos.id)
+  - funcionario_id (FK -> usuarios.id)
+  - metodo (qr_code / rfid)
+  - registrado_em (timestamp)
+
+OPERACOES:
+  [C] CREATE  - Funcionario valida ingresso e registra a entrada
+  [R] READ    - Funcionario ve a tela de validacao com dados do participante
+                Gestor ve relatorio de entradas do evento
+  [U] UPDATE  - (nao se aplica - entrada e imutavel)
+  [D] DELETE  - (nao se aplica - historico nao pode ser removido)
+
+ARQUIVOS SUGERIDOS:
+  - funcionario/validar_entrada.php  (tela principal do porteiro)
+  - funcionario/buscar_ingresso.php  (action PHP que recebe QR Code ou RFID e retorna dados)
+  - gestor/relatorio_entradas.php
+
+REGRAS:
+  - Ao receber QR Code ou codigo RFID, buscar o ingresso correspondente
+  - Verificar: ingresso existe? | status = 'disponivel'? | idade minima ok?
+  - Se tudo valido: exibir foto + nome + idade do participante e botao "Liberar Entrada"
+  - Ao liberar: atualizar ingresso.status = 'utilizado' e inserir registro em 'entradas'
+  - Se ingresso ja utilizado: exibir alerta de duplicidade
+  - Se menor de idade: exibir alerta e bloquear entrada
+
+
+================================================================
+  CRUD 10 - CONSUMO NO BAR
+================================================================
+Tabelas: consumos_bar + itens_consumo
+Sprint: 03
+
+CAMPOS - consumos_bar:
+  - id (PK)
+  - evento_id (FK -> eventos.id)
+  - pulseira_id (FK -> pulseiras.id)
+  - funcionario_id (FK -> usuarios.id)
+  - valor_total (decimal)
+  - registrado_em (timestamp)
+
+CAMPOS - itens_consumo:
+  - id (PK)
+  - consumo_id (FK -> consumos_bar.id)
+  - produto (nome do produto)
+  - quantidade (int)
+  - valor_unitario (decimal)
+
+OPERACOES:
+  [C] CREATE  - Funcionario identifica pulseira, adiciona produtos e confirma venda
+  [R] READ    - Funcionario ve saldo do usuario apos identificar a pulseira
+                Gestor ve relatorio de consumo do evento
+                Baladeiro ve seu historico de consumo
+  [U] UPDATE  - (nao se aplica - venda registrada e imutavel)
+  [D] DELETE  - (nao se aplica - historico nao pode ser removido)
+
+ARQUIVOS SUGERIDOS:
+  - funcionario/bar.php              (tela principal do bar com campo para RFID)
+  - funcionario/registrar_consumo.php (action que debita saldo e salva consumo)
+  - gestor/relatorio_bar.php
+  - baladeiro/historico_consumo.php
+
+REGRAS:
+  - Identificar usuario pelo codigo RFID da pulseira
+  - Exibir nome e saldo disponivel
+  - Verificar se saldo >= valor total da compra antes de confirmar
+  - Ao confirmar: debitar saldo da pulseira E inserir registros em consumos_bar e itens_consumo
+  - Tudo em uma transacao SQL (BEGIN / COMMIT) para evitar inconsistencia
+  - Produtos podem ser cadastrados de forma simples (nome + preco fixo, sem CRUD separado)
+
+
+================================================================
+  CRUD 11 - RELATORIOS (pelo Gestor)
+================================================================
+Tabelas consultadas: entradas, consumos_bar, itens_consumo, ingressos, pulseiras
+Sprint: 04
+
+(Este CRUD e somente leitura - nao ha insercao ou remocao de dados aqui)
+
+OPERACOES:
+  [R] READ - Relatorio de entradas: total de pessoas, por horario, por metodo (QR/RFID)
+  [R] READ - Relatorio de ingressos: vendas por lote, receita total, ingressos nao utilizados
+  [R] READ - Relatorio de consumo: produtos mais vendidos, receita do bar, consumo por horario
+  [R] READ - Relatorio geral do evento: resumo de tudo acima em uma tela so
+
+ARQUIVOS SUGERIDOS:
+  - gestor/relatorios.php           (menu de relatorios)
+  - gestor/relatorio_entradas.php
+  - gestor/relatorio_ingressos.php
+  - gestor/relatorio_bar.php
+  - gestor/relatorio_geral.php
+
+DICAS DE SQL:
+  - Usar COUNT(), SUM(), GROUP BY para agregar dados
+  - Filtrar sempre por evento_id para mostrar dados do evento correto
+  - Exibir resultados em tabelas HTML simples
+
+
+================================================================
+  RESUMO GERAL DOS CRUDs
+================================================================
+
+  CRUD 01 - Usuarios (Baladeiro)          -> Sprint 01
+  CRUD 02 - Login / Autenticacao          -> Sprint 01
+  CRUD 03 - Gestores de Balada (Admin)    -> Sprint 01
+  CRUD 04 - Baladas                       -> Sprint 01
+  CRUD 05 - Pulseiras / Tags RFID         -> Sprint 02
+  CRUD 06 - Eventos                       -> Sprint 02
+  CRUD 07 - Ingressos (Lotes + Compra)    -> Sprint 02
+  CRUD 08 - Funcionarios                  -> Sprint 02/03
+  CRUD 09 - Controle de Acesso / Entradas -> Sprint 03
+  CRUD 10 - Consumo no Bar                -> Sprint 03
+  CRUD 11 - Relatorios (somente leitura)  -> Sprint 04
+
+================================================================
+  ORDEM RECOMENDADA PARA DESENVOLVIMENTO
+================================================================
+
+  1. CRUD 02 - Login         (base para tudo - fazer primeiro)
+  2. CRUD 01 - Baladeiro     (cadastro mais simples, bom para comecar)
+  3. CRUD 03 - Gestor/Admin  (depende do login funcionando)
+  4. CRUD 04 - Baladas       (depende do gestor existir)
+  5. CRUD 08 - Funcionarios  (depende da balada existir)
+  6. CRUD 05 - Pulseiras     (depende do baladeiro existir)
+  7. CRUD 06 - Eventos       (depende da balada existir)
+  8. CRUD 07 - Ingressos     (depende de evento + pulseira)
+  9. CRUD 09 - Entradas      (depende de ingresso + funcionario)
+  10. CRUD 10 - Bar          (depende de pulseira + saldo)
+  11. CRUD 11 - Relatorios   (depende de tudo anterior)
+
+================================================================
+  FIM DO DOCUMENTO
+================================================================ 

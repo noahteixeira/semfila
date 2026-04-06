@@ -1,3 +1,17 @@
+v1.2.0 | 06/04/2026 - CRUD de Funcionários e Controle de Acesso / Entradas. - JEHAD
+- Implementação do CRUD de Funcionários: gestores podem cadastrar, listar, editar e desativar funcionários.
+- Backend: cadastrar_funcionario.php, listar_funcionarios.php, editar_funcionario.php, desativar_funcionario.php.
+- Frontend: cadastrar_funcionario.html, listar_funcionarios.html, editar_funcionario.html.
+- JavaScript: cadastrar_funcionario.js, listar_funcionarios.js, editar_funcionario.js.
+- Implementação do CRUD de Controle de Acesso / Entradas: funcionários validam ingressos por QR code.
+- Backend: validar_entrada.php para buscar e validar ingresso, registrar_entrada.php para marcar como utilizado.
+- Backend: relatorio_entradas.php para gestores verem relatório de entradas do evento.
+- Frontend: validar_entrada.html (tela de porteiro com scanner de QR code), relatorio_entradas.html (relatório em tabela).
+- JavaScript: validar_entrada.js, relatorio_entradas.js.
+- Funcionário visualiza nome, foto, idade e dados do participante antes de liberar entrada.
+- Sistema verifica idade mínima do evento automaticamente.
+- Adicionados links de navegação em area_gestor.html e area_funcionario.html para os novos CRUDs.
+
 v1.1.2 | 06/04/2026 - Pequena correção nas pastas e padronização de código. - NOAH
 - Renomeado listar_eventos.php do funcionário para listar_eventos_funcionario.php para evitar conflito.
 - Corrigidos todos os caminhos nos arquivos HTML (css/, js/, assets/, ../backend/).
