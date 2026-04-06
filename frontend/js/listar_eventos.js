@@ -36,7 +36,7 @@ if (params.get("erro") == "acao") {
 }
 
 // carregar eventos
-fetch("../../backend/gestor/listar_eventos.php")
+fetch("../backend/listar_eventos.php")
     .then(function (response) { return response.json(); })
     .then(function (eventos) {
         var tbody = document.getElementById("lista-eventos");
@@ -52,8 +52,8 @@ fetch("../../backend/gestor/listar_eventos.php")
 
             var acoes = '<a href="editar_evento.html?id=' + e.id + '" class="btn-acao btn-editar">Editar</a>';
             if (e.status == "ativo") {
-                acoes += ' <a href="../../backend/gestor/encerrar_evento.php" class="btn-acao btn-encerrar" onclick="return confirmarEncerrar(' + e.id + ', \'encerrar\')">Encerrar</a>';
-                acoes += ' <a href="../../backend/gestor/encerrar_evento.php" class="btn-acao btn-encerrar" onclick="return confirmarEncerrar(' + e.id + ', \'cancelar\')">Cancelar</a>';
+                acoes += ' <a href="../backend/encerrar_evento.php" class="btn-acao btn-encerrar" onclick="return confirmarEncerrar(' + e.id + ', \'encerrar\')">Encerrar</a>';
+                acoes += ' <a href="../backend/encerrar_evento.php" class="btn-acao btn-encerrar" onclick="return confirmarEncerrar(' + e.id + ', \'cancelar\')">Cancelar</a>';
             }
 
             var tr = document.createElement("tr");
@@ -79,7 +79,7 @@ function confirmarEncerrar(id, acao) {
         // criar form para POST
         var form = document.createElement("form");
         form.method = "POST";
-        form.action = "../../backend/gestor/encerrar_evento.php";
+        form.action = "../backend/encerrar_evento.php";
 
         var inputId = document.createElement("input");
         inputId.type = "hidden";

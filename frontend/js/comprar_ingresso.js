@@ -6,10 +6,10 @@ if (!eventoId) {
 }
 
 // carregar detalhes do evento
-fetch("../../backend/baladeiro/ver_eventos.php")
+fetch("../backend/ver_eventos.php")
     .then(function (response) { return response.json(); })
     .then(function (eventos) {
-        var evento = eventos.find(e => e.id == eventoId);
+        var evento = eventos.find(function(e) { return e.id == eventoId; });
         if (!evento) {
             document.getElementById("detalhes-evento").innerHTML = '<p>Evento não encontrado.</p>';
             return;
@@ -37,7 +37,7 @@ fetch("../../backend/baladeiro/ver_eventos.php")
     });
 
 function carregarLotes(eventoId) {
-    fetch("../../backend/baladeiro/listar_lotes.php?evento_id=" + eventoId)
+    fetch("../backend/listar_lotes.php?evento_id=" + eventoId)
         .then(function (response) { return response.json(); })
         .then(function (lotes) {
             var container = document.getElementById("lotes-ingressos");
@@ -92,7 +92,7 @@ function comprarIngresso(loteId, eventoId) {
     formData.append("evento_id", eventoId);
     formData.append("quantidade", quantidade);
 
-    fetch("../../backend/baladeiro/comprar_ingresso.php", {
+    fetch("../backend/comprar_ingresso.php", {
         method: "POST",
         body: formData
     })

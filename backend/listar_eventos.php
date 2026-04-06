@@ -1,14 +1,12 @@
 <?php
-include("../auth_check.php");
-include("../conexao.php");
+include("auth_check.php");
+include("conexao.php");
 
-// verificar se é gestor
 if ($_SESSION["usuario_tipo"] != "gestor") {
-    header("Location: ../../frontend/login.html");
+    echo json_encode(["erro" => "Acesso negado"]);
     exit();
 }
 
-// buscar eventos do gestor (através da balada)
 $sql = "SELECT e.id, e.nome, e.descricao, e.data_evento, e.horario_abertura, e.idade_minima, e.capacidade_maxima, e.status, e.criado_em
         FROM eventos e
         INNER JOIN baladas b ON e.balada_id = b.id

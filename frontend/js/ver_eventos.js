@@ -1,5 +1,5 @@
 // carregar eventos disponíveis
-fetch("../../backend/baladeiro/ver_eventos.php")
+fetch("../backend/ver_eventos.php")
     .then(function (response) { return response.json(); })
     .then(function (eventos) {
         var container = document.getElementById("lista-eventos");

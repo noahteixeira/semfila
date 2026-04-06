@@ -1,14 +1,12 @@
 <?php
-include("../auth_check.php");
-include("../conexao.php");
+include("auth_check.php");
+include("conexao.php");
 
-// verificar se é baladeiro
 if ($_SESSION["usuario_tipo"] != "baladeiro") {
     echo json_encode(["erro" => "Acesso negado"]);
     exit();
 }
 
-// buscar eventos ativos
 $sql = "SELECT e.id, e.nome, e.descricao, e.data_evento, e.horario_abertura, e.idade_minima, e.capacidade_maxima, b.nome AS balada_nome, b.endereco, b.cidade
         FROM eventos e
         INNER JOIN baladas b ON e.balada_id = b.id

@@ -1,8 +1,7 @@
 <?php
-include("../auth_check.php");
-include("../conexao.php");
+include("auth_check.php");
+include("conexao.php");
 
-// verificar se é baladeiro
 if ($_SESSION["usuario_tipo"] != "baladeiro") {
     echo json_encode(["erro" => "Acesso negado"]);
     exit();
@@ -19,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // verificar disponibilidade
-    $sql_verificar = "SELECT il.quantidade_total, il.quantidade_vendida FROM ingressos_lotes il WHERE il.id = ? AND il.evento_id = ? AND il.ativo = 1";
+    $sql_verificar = "SELECT quantidade_total, quantidade_vendida FROM ingressos_lotes WHERE id = ? AND evento_id = ? AND ativo = 1";
     $stmt_verificar = mysqli_prepare($conexao, $sql_verificar);
     mysqli_stmt_bind_param($stmt_verificar, "ii", $lote_id, $evento_id);
     mysqli_stmt_execute($stmt_verificar);
@@ -39,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     mysqli_stmt_execute($stmt_atualizar);
     mysqli_stmt_close($stmt_atualizar);
 
-    // criar ingressos (QR codes)
+    // criar ingressos com QR codes
     for ($i = 0; $i < $quantidade; $i++) {
         $qr_code = uniqid("QR_");
         $sql_ingresso = "INSERT INTO ingressos (lote_id, usuario_id, qr_code, status) VALUES (?, ?, ?, 'disponivel')";
@@ -51,6 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     mysqli_close($conexao);
     echo json_encode(["sucesso" => true, "mensagem" => "Ingressos comprados com sucesso! Total: " . $quantidade]);
+
 } else {
     echo json_encode(["erro" => "Método inválido"]);
 }

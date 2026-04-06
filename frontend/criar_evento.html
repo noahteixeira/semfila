@@ -4,17 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SemFila - Criar Evento</title>
-    <link rel="stylesheet" href="../css/gestor.css">
+    <link rel="stylesheet" href="css/gestor.css">
 </head>
 <body>
 
     <div class="container">
-        <img src="../assets/logo.png" alt="SemFila" class="logo">
+        <img src="assets/logo.png" alt="SemFila" class="logo">
         <h2>Criar Novo Evento</h2>
 
         <div id="msg-erro" class="msg-erro" style="display: none;"></div>
 
-        <form action="../../backend/gestor/criar_evento.php" method="POST" id="form-evento">
+        <form action="../backend/criar_evento.php" method="POST" id="form-evento">
 
             <label for="nome">Nome do Evento</label>
             <input type="text" id="nome" name="nome" placeholder="Nome do evento" required>
@@ -42,6 +42,6 @@
         </div>
     </div>
 
-    <script src="../js/criar_evento.js"></script>
+    <script src="js/criar_evento.js"></script>
 </body>
 </html>

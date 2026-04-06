@@ -21,7 +21,7 @@ if (params.get("erro") == "db") {
 }
 
 // carregar dados do evento
-fetch("../../backend/gestor/editar_evento.php?id=" + id)
+fetch("../backend/editar_evento.php?id=" + id)
     .then(function (response) { return response.json(); })
     .then(function (evento) {
         if (evento.erro) {

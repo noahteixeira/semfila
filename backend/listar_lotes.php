@@ -1,8 +1,7 @@
 <?php
-include("../auth_check.php");
-include("../conexao.php");
+include("auth_check.php");
+include("conexao.php");
 
-// verificar se é baladeiro
 if ($_SESSION["usuario_tipo"] != "baladeiro") {
     echo json_encode(["erro" => "Acesso negado"]);
     exit();
@@ -10,7 +9,6 @@ if ($_SESSION["usuario_tipo"] != "baladeiro") {
 
 $evento_id = (int)$_GET["evento_id"];
 
-// buscar lotes disponíveis do evento
 $sql = "SELECT il.id, il.nome_lote, il.preco, il.taxa_plataforma, il.quantidade_total, il.quantidade_vendida
         FROM ingressos_lotes il
         INNER JOIN eventos e ON il.evento_id = e.id

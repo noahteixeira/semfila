@@ -12,7 +12,7 @@ function adicionarAoCarrinho(loteId, loteName, eventoId, eventoNome, preco, taxa
     var carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
 
     // verificar se já existe esse item no carrinho
-    var itemExistente = carrinho.find(item => item.loteId == loteId && item.eventoId == eventoId);
+    var itemExistente = carrinho.find(function(item) { return item.loteId == loteId && item.eventoId == eventoId; });
 
     if (itemExistente) {
         itemExistente.quantidade += quantidade;
@@ -35,7 +35,7 @@ function adicionarAoCarrinho(loteId, loteName, eventoId, eventoNome, preco, taxa
 function obterQuantidadeCarrinho() {
     var carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
     var total = 0;
-    carrinho.forEach(item => {
+    carrinho.forEach(function(item) {
         total += item.quantidade;
     });
     return total;
