@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SemFila - Carrinho de Ingressos</title>
+    <link rel="stylesheet" href="../css/carrinho.css">
+</head>
+<body>
+
+    <div class="container">
+        <img src="../assets/logo.png" alt="SemFila" class="logo">
+        <h2>Carrinho de Ingressos</h2>
+
+        <div id="msg-vazio" class="msg-info" style="display: none;">
+            <p>Seu carrinho está vazio!</p>
+            <a href="ver_eventos.html" class="btn">Voltar aos Eventos</a>
+        </div>
+
+        <div id="carrinho-content" style="display: none;">
+            <table class="tabela-carrinho">
+                <thead>
+                    <tr>
+                        <th>Evento</th>
+                        <th>Lote</th>
+                        <th>Preço Unit.</th>
+                        <th>Taxa</th>
+                        <th>Qtd</th>
+                        <th>Subtotal</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody id="itens-carrinho">
+                </tbody>
+            </table>
+
+            <div class="resumo-compra">
+                <div class="linha-resumo">
+                    <span>Subtotal:</span>
+                    <span id="subtotal">R$ 0,00</span>
+                </div>
+                <div class="linha-resumo">
+                    <span>Taxas:</span>
+                    <span id="total-taxas">R$ 0,00</span>
+                </div>
+                <div class="linha-resumo total">
+                    <span>TOTAL:</span>
+                    <span id="total-geral">R$ 0,00</span>
+                </div>
+            </div>
+
+            <div class="botoes-acao">
+                <a href="ver_eventos.html" class="btn btn-secundario">Continuar Comprando</a>
+                <button onclick="finalizarCompra()" class="btn btn-principal">Finalizar Compra</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/carrinho_manager.js"></script>
+    <script src="../js/carrinho.js"></script>
+</body>
+</html>

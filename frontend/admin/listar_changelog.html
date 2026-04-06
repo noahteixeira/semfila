@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SemFila - Changelog</title>
+    <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
+
+    <div class="container">
+        <img src="../assets/logo.png" alt="SemFila" class="logo">
+        <h2>Histórico de Atualizações</h2>
+
+        <div id="msg-sucesso" class="msg-sucesso" style="display: none;"></div>
+        <div id="msg-erro" class="msg-erro" style="display: none;"></div>
+
+        <div class="menu">
+            <a href="criar_changelog.html" class="btn">+ Adicionar Changelog</a>
+        </div>
+
+        <div id="tabela-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Versão</th>
+                        <th>Data</th>
+                        <th>Autor</th>
+                        <th>Descrição</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="lista-changelog">
+                </tbody>
+            </table>
+        </div>
+
+        <div class="menu">
+            <a href="../area_admin.html" class="btn">Voltar</a>
+        </div>
+    </div>
+
+    <script src="../js/listar_changelog.js"></script>
+</body>
+</html>

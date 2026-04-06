@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SemFila - Editar Evento</title>
+    <link rel="stylesheet" href="../css/gestor.css">
+</head>
+<body>
+
+    <div class="container">
+        <img src="../assets/logo.png" alt="SemFila" class="logo">
+        <h2>Editar Evento</h2>
+
+        <div id="msg-erro" class="msg-erro" style="display: none;"></div>
+
+        <form action="../../backend/gestor/editar_evento.php" method="POST" id="form-evento">
+            <input type="hidden" id="evento_id" name="evento_id">
+
+            <label for="nome">Nome do Evento</label>
+            <input type="text" id="nome" name="nome" placeholder="Nome do evento" required>
+
+            <label for="descricao">Descrição</label>
+            <textarea id="descricao" name="descricao" placeholder="Descrição do evento (opcional)"></textarea>
+
+            <label for="data_evento">Data do Evento</label>
+            <input type="date" id="data_evento" name="data_evento" required>
+
+            <label for="horario_abertura">Horário de Abertura</label>
+            <input type="time" id="horario_abertura" name="horario_abertura" required>
+
+            <label for="idade_minima">Idade Mínima</label>
+            <input type="number" id="idade_minima" name="idade_minima" min="0" required>
+
+            <label for="capacidade_maxima">Capacidade Máxima</label>
+            <input type="number" id="capacidade_maxima" name="capacidade_maxima" min="1" required>
+
+            <button type="submit">Salvar Alterações</button>
+        </form>
+
+        <div class="menu">
+            <a href="listar_eventos.html" class="btn">Voltar à lista</a>
+        </div>
+    </div>
+
+    <script src="../js/editar_evento.js"></script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SemFila - Editar Changelog</title>
+    <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
+
+    <div class="container">
+        <img src="../assets/logo.png" alt="SemFila" class="logo">
+        <h2>Editar Changelog</h2>
+
+        <div id="msg-erro" class="msg-erro" style="display: none;"></div>
+
+        <form action="../../backend/admin/editar_changelog.php" method="POST" id="form-changelog">
+            <input type="hidden" id="id" name="id">
+
+            <label for="versao">Versão</label>
+            <input type="text" id="versao" name="versao" required>
+
+            <label for="data">Data</label>
+            <input type="date" id="data" name="data" required>
+
+            <label for="descricao">Mudanças</label>
+            <textarea id="descricao" name="descricao" rows="8" required></textarea>
+
+            <button type="submit">Salvar</button>
+        </form>
+
+        <div class="menu">
+            <a href="listar_changelog.html" class="btn">Voltar</a>
+        </div>
+    </div>
+
+    <script src="../js/editar_changelog.js"></script>
+</body>
+</html>
