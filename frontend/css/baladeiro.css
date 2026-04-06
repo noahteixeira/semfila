@@ -1,0 +1,154 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1a1a2e;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #fff;
+}
+
+.container {
+    background-color: #16213e;
+    padding: 40px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
+}
+
+.logo {
+    width: 180px;
+    margin-bottom: 10px;
+}
+
+h2 {
+    margin-bottom: 20px;
+    color: #e94560;
+}
+
+.link-carrinho {
+    display: inline-block;
+    position: relative;
+    background-color: #e94560;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.link-carrinho:hover {
+    background-color: #c73652;
+}
+
+.badge-carrinho {
+    background-color: #f39c12;
+    color: #fff;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+#lista-eventos {
+    text-align: left;
+    margin-bottom: 30px;
+}
+
+.evento {
+    background-color: #1a1a2e;
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border-left: 4px solid #e94560;
+}
+
+.evento h3 {
+    color: #e94560;
+    margin-bottom: 10px;
+}
+
+.evento p {
+    margin-bottom: 5px;
+    color: #ccc;
+}
+
+.card-ingresso {
+    background-color: #1a1a2e;
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border-left: 4px solid #29a19c;
+}
+
+.card-ingresso h3 {
+    color: #29a19c;
+    margin-bottom: 10px;
+}
+
+.card-ingresso p {
+    margin-bottom: 8px;
+    color: #ccc;
+}
+
+.status-disponivel {
+    color: #7ed957;
+    font-weight: bold;
+}
+
+.status-utilizado {
+    color: #f39c12;
+    font-weight: bold;
+}
+
+.status-cancelado {
+    color: #e94560;
+    font-weight: bold;
+}
+
+.btn-comprar {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #e94560;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.btn-comprar:hover {
+    background-color: #c73652;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px;
+    background-color: #e94560;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.btn:hover {
+    background-color: #c73652;
+}

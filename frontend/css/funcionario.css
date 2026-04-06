@@ -1,0 +1,105 @@
+/* funcionario.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 600px;
+    text-align: center;
+}
+
+.logo {
+    max-width: 150px;
+    margin-bottom: 20px;
+}
+
+h2 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.descricao {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.identificacao {
+    margin-bottom: 20px;
+}
+
+.identificacao label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.identificacao input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    margin: 5px;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+#cliente-info {
+    background-color: #e9ecef;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+#consumo-form {
+    margin-top: 20px;
+}
+
+#consumo-form select, #consumo-form input {
+    padding: 8px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#itens-lista {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+#itens-lista li {
+    background-color: #f8f9fa;
+    padding: 5px;
+    margin: 5px 0;
+    border-radius: 4px;
+}
+
+.menu {
+    margin-top: 20px;
+}

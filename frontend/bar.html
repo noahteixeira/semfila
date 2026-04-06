@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SemFila - Bar</title>
+    <link rel="stylesheet" href="css/funcionario.css">
+</head>
+<body>
+
+    <div class="container">
+        <img src="assets/logo.png" alt="SemFila" class="logo">
+        <h2>Controle do Bar</h2>
+        <p class="descricao">Identifique a pulseira do cliente e registre os consumos.</p>
+
+        <div class="identificacao">
+            <label for="rfid">Código RFID da Pulseira:</label>
+            <input type="text" id="rfid" placeholder="Digite ou escaneie o RFID">
+            <button id="buscar-btn">Buscar Cliente</button>
+        </div>
+
+        <div id="cliente-info" style="display: none;">
+            <h3>Cliente: <span id="cliente-nome"></span></h3>
+            <p>Saldo Disponível: R$ <span id="cliente-saldo"></span></p>
+        </div>
+
+        <div id="consumo-form" style="display: none;">
+            <div class="evento-select">
+                <label for="evento-select">Evento:</label>
+                <select id="evento-select">
+                    <!-- Eventos serão carregados aqui -->
+                </select>
+            </div>
+            <h3>Adicionar Produtos</h3>
+            <select id="produto-select">
+                <option value="">Selecione um produto</option>
+                <option value="Cerveja|5.00">Cerveja - R$ 5,00</option>
+                <option value="Refrigerante|3.00">Refrigerante - R$ 3,00</option>
+                <option value="Água|2.00">Água - R$ 2,00</option>
+                <option value="Salgadinho|4.00">Salgadinho - R$ 4,00</option>
+                <option value="Batata Frita|6.00">Batata Frita - R$ 6,00</option>
+            </select>
+            <input type="number" id="quantidade" placeholder="Quantidade" min="1" value="1">
+            <button id="adicionar-produto-btn">Adicionar</button>
+
+            <h4>Itens da Compra:</h4>
+            <ul id="itens-lista"></ul>
+            <p>Total: R$ <span id="total">0.00</span></p>
+
+            <button id="confirmar-btn">Confirmar Venda</button>
+        </div>
+
+        <div class="menu">
+            <a href="area_funcionario.html" class="btn">Voltar</a>
+        </div>
+    </div>
+
+    <script src="js/bar.js"></script>
+</body>
+</html>

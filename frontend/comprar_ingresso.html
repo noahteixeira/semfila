@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SemFila - Comprar Ingresso</title>
+    <link rel="stylesheet" href="css/comprar_ingresso.css">
+</head>
+<body>
+
+    <div class="container">
+        <img src="assets/logo.png" alt="SemFila" class="logo">
+        <h2>Comprar Ingresso</h2>
+
+        <a href="carrinho.html" class="link-carrinho">
+            🛒 Carrinho
+            <span id="badge-carrinho" class="badge-carrinho" style="display: none;">0</span>
+        </a>
+
+        <div id="msg-sucesso" class="msg-sucesso" style="display: none;"></div>
+        <div id="msg-erro" class="msg-erro" style="display: none;"></div>
+
+        <div class="flex-container">
+            <div id="detalhes-evento" class="evento-detalhes">
+                <!-- Detalhes do evento serão carregados aqui -->
+            </div>
+
+            <div id="lotes-container" class="lotes-container">
+                <h3>Lotes Disponíveis</h3>
+                <div id="lotes-ingressos">
+                    <!-- Lotes serão carregados aqui -->
+                </div>
+            </div>
+        </div>
+
+        <div class="menu">
+            <a href="ver_eventos.html" class="btn">Voltar aos Eventos</a>
+        </div>
+    </div>
+
+    <script src="js/carrinho_manager.js"></script>
+    <script src="js/comprar_ingresso.js"></script>
+</body>
+</html>
