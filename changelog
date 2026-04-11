@@ -1,3 +1,9 @@
+v1.2.3 | 10/04/2026 - Adição do backend de relatórios do gestor. - GUSTAVO
+- Criados os endpoints backend/relatorio_ingressos.php e backend/relatorio_geral.php para consultas de gestor.
+- Implementada a verificação de privilégio de gestor e acesso ao evento em todos os relatórios.
+- Relatório de ingressos agrega vendas por lote, receita total e ingressos não utilizados.
+- Relatório geral retorna dados de entradas, ingressos, consumo do bar e resumo consolidado.
+
 v1.2.2 | 10/04/2026 - Adição do front-end de relatórios do gestor. - GUSTAVO
 - Criada a página relatorios.html com menu para acessar relatórios de entradas, ingressos, bar e geral.
 - Criadas as páginas relatorio_ingressos.html e relatorio_geral.html seguindo o estilo de relatórios existentes.
