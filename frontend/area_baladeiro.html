@@ -5,27 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SemFila - Área do Baladeiro</title>
     <link rel="stylesheet" href="css/area_baladeiro.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/sidebar.css">
 </head>
-<body>
+<body data-cargo="baladeiro" data-pagina="inicio">
 
-    <div class="container">
-        <h1>Bem-vindo!</h1>
-        <p>Esta é sua área pessoal.</p>
+    <main class="conteudo-principal">
+        <div class="container">
+            <h1>Bem-vindo!</h1>
+            <p>Esta é sua área pessoal. Use o menu ao lado para navegar.</p>
 
-        <div class="menu">
-            <a href="ver_eventos.html" class="btn">Ver Eventos</a>
-            <a href="meus_ingressos.html" class="btn">Meus Ingressos</a>
-            <a href="pulseira.html" class="btn">Minha Pulseira</a>
-            <a href="historico_consumo.html" class="btn">Histórico de Consumo</a>
-            <a href="perfil_baladeiro.html" class="btn">Ver Perfil</a>
-            <a href="editar_baladeiro.html" class="btn">Editar Dados</a>
-            <a href="../backend/logout.php" class="btn">Sair</a>
+            <div class="acoes">
+                <a href="../backend/desativar_conta.php" class="btn-desativar" onclick="return confirm('Tem certeza que deseja desativar sua conta?')">Desativar Conta</a>
+            </div>
         </div>
+    </main>
 
-        <div class="acoes">
-            <a href="../backend/desativar_conta.php" class="btn-desativar" onclick="return confirm('Tem certeza que deseja desativar sua conta?')">Desativar Conta</a>
-        </div>
-    </div>
-
+    <script src="js/sidebar.js"></script>
 </body>
 </html>

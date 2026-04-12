@@ -5,42 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SemFila - Validar Entrada</title>
     <link rel="stylesheet" href="css/funcionario.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/sidebar.css">
 </head>
-<body>
+<body data-cargo="funcionario" data-pagina="validar">
 
-    <div class="container">
-        <img src="assets/logo.png" alt="SemFila" class="logo">
-        <h2>Controle de Entrada</h2>
-        <p class="descricao">Escaneie o QR Code ou digite o código do ingresso / RFID da pulseira.</p>
+    <main class="conteudo-principal">
+        <div class="container">
+            <h2>Controle de Entrada</h2>
+            <p class="descricao">Escaneie o QR Code ou digite o código do ingresso / RFID da pulseira.</p>
 
-        <div class="validacao-container">
-            <div class="campo-qr">
-                <label for="qr-code">QR Code ou RFID:</label>
-                <input type="text" id="qr-code" placeholder="Digite o QR Code ou RFID" autofocus>
-                <button id="buscar-btn">Validar</button>
-            </div>
-
-            <div id="participante-info" style="display: none;" class="participante-info">
-                <h3>Dados do Participante:</h3>
-                <p><strong>Nome:</strong> <span id="participante-nome"></span></p>
-                <p><strong>Idade:</strong> <span id="participante-idade"></span> anos</p>
-                <p><strong>Evento:</strong> <span id="evento-nome"></span></p>
-                <div id="foto-container" style="display: none;">
-                    <p><strong>Foto:</strong></p>
-                    <img id="participante-foto" src="" alt="Foto" style="max-width: 150px; border-radius: 8px;">
+            <div class="validacao-container">
+                <div class="campo-qr">
+                    <label for="qr-code">QR Code ou RFID:</label>
+                    <input type="text" id="qr-code" placeholder="Digite o QR Code ou RFID" autofocus>
+                    <button id="buscar-btn">Validar</button>
                 </div>
-                <button id="liberar-btn" class="btn-liberar">Liberar Entrada</button>
+
+                <div id="participante-info" style="display: none;" class="participante-info">
+                    <h3>Dados do Participante:</h3>
+                    <p><strong>Nome:</strong> <span id="participante-nome"></span></p>
+                    <p><strong>Idade:</strong> <span id="participante-idade"></span> anos</p>
+                    <p><strong>Evento:</strong> <span id="evento-nome"></span></p>
+                    <div id="foto-container" style="display: none;">
+                        <p><strong>Foto:</strong></p>
+                        <img id="participante-foto" src="" alt="Foto" style="max-width: 150px; border-radius: 8px;">
+                    </div>
+                    <button id="liberar-btn" class="btn-liberar">Liberar Entrada</button>
+                </div>
+
+                <div id="msg-sucesso" class="msg-sucesso" style="display: none;"></div>
+                <div id="msg-erro" class="msg-erro" style="display: none;"></div>
             </div>
-
-            <div id="msg-sucesso" class="msg-sucesso" style="display: none;"></div>
-            <div id="msg-erro" class="msg-erro" style="display: none;"></div>
         </div>
+    </main>
 
-        <div class="menu">
-            <a href="area_funcionario.html" class="btn">Voltar</a>
-        </div>
-    </div>
-
+    <script src="js/sidebar.js"></script>
     <script src="js/validar_entrada.js"></script>
 </body>
 </html>

@@ -1,23 +1,24 @@
 /* funcionario.css */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+* {
     margin: 0;
     padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1a1a2e;
+    color: #fff;
+    min-height: 100vh;
 }
 
 .container {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 90%;
-    max-width: 600px;
-    text-align: center;
+    background-color: #16213e;
+    padding: 40px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
 }
 
 .logo {
@@ -26,67 +27,257 @@ body {
 }
 
 h2 {
-    color: #333;
+    color: #e94560;
+    margin-bottom: 10px;
+}
+
+h3 {
+    color: #e94560;
+    margin-bottom: 12px;
+}
+
+h4 {
+    color: #ccc;
+    margin-top: 20px;
     margin-bottom: 10px;
 }
 
 .descricao {
-    color: #666;
+    color: #a0a0b0;
     margin-bottom: 20px;
+}
+
+/* Validacao / Identificacao */
+.validacao-container {
+    margin-top: 10px;
 }
 
 .identificacao {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
-.identificacao label {
+.identificacao label,
+.campo-qr label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #ccc;
+    font-size: 14px;
+}
+
+.identificacao input,
+.campo-qr input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #333;
+    border-radius: 5px;
+    margin-bottom: 12px;
+    background-color: #0f3460;
+    color: #fff;
+    font-size: 14px;
+}
+
+.identificacao input::placeholder,
+.campo-qr input::placeholder {
+    color: #666;
+}
+
+.identificacao input:focus,
+.campo-qr input:focus {
+    outline: none;
+    border-color: #e94560;
+}
+
+.identificacao button,
+.campo-qr button {
+    padding: 12px 24px;
+    background-color: #e94560;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
     font-weight: bold;
 }
 
-.identificacao input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-bottom: 10px;
+.identificacao button:hover,
+.campo-qr button:hover {
+    background-color: #c73652;
 }
 
+/* Participante Info (validar entrada) */
+.participante-info {
+    background-color: #1a1a2e;
+    padding: 20px;
+    border-radius: 8px;
+    border-left: 4px solid #e94560;
+    margin-top: 20px;
+    text-align: left;
+}
+
+.participante-info p {
+    margin-bottom: 8px;
+    color: #ccc;
+}
+
+.participante-info strong {
+    color: #fff;
+}
+
+.btn-liberar {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #2ecc71;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+.btn-liberar:hover {
+    background-color: #27ae60;
+}
+
+/* Buttons */
 .btn {
-    background-color: #007bff;
-    color: white;
+    background-color: #e94560;
+    color: #fff;
     border: none;
     padding: 10px 20px;
-    border-radius: 4px;
+    border-radius: 5px;
     cursor: pointer;
     text-decoration: none;
     display: inline-block;
     margin: 5px;
+    font-size: 14px;
 }
 
 .btn:hover {
-    background-color: #0056b3;
+    background-color: #c73652;
 }
 
+/* Messages */
+.msg-erro {
+    background-color: #e9456033;
+    color: #e94560;
+    padding: 12px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+.msg-sucesso {
+    background-color: #2ecc7133;
+    color: #2ecc71;
+    padding: 12px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+/* Cliente Info (bar) */
 #cliente-info {
-    background-color: #e9ecef;
-    padding: 10px;
-    border-radius: 4px;
-    margin-bottom: 20px;
+    background-color: #1a1a2e;
+    padding: 16px 20px;
+    border-radius: 8px;
+    border-left: 4px solid #29a19c;
+    margin-bottom: 25px;
 }
 
+#cliente-info h3 {
+    color: #fff;
+    margin-bottom: 5px;
+}
+
+#cliente-info p {
+    color: #2ecc71;
+    font-weight: bold;
+}
+
+/* Consumo Form (bar) */
 #consumo-form {
     margin-top: 20px;
 }
 
-#consumo-form select, #consumo-form input {
-    padding: 8px;
-    margin: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+.evento-select {
+    margin-bottom: 15px;
 }
 
+.evento-select label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #ccc;
+    font-size: 14px;
+}
+
+.evento-select select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #333;
+    border-radius: 5px;
+    background-color: #0f3460;
+    color: #fff;
+    font-size: 14px;
+}
+
+#consumo-form select,
+#consumo-form input {
+    padding: 10px 12px;
+    margin-bottom: 10px;
+    border: 1px solid #333;
+    border-radius: 5px;
+    background-color: #0f3460;
+    color: #fff;
+    font-size: 14px;
+}
+
+#consumo-form select {
+    width: 100%;
+}
+
+#consumo-form input {
+    width: 100%;
+}
+
+#consumo-form select:focus,
+#consumo-form input:focus {
+    outline: none;
+    border-color: #e94560;
+}
+
+#consumo-form button {
+    padding: 12px 24px;
+    background-color: #e94560;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+#consumo-form button:hover {
+    background-color: #c73652;
+}
+
+#consumo-form #confirmar-btn {
+    width: 100%;
+    padding: 14px;
+    background-color: #2ecc71;
+    font-size: 16px;
+    margin-top: 15px;
+}
+
+#consumo-form #confirmar-btn:hover {
+    background-color: #27ae60;
+}
+
+/* Itens lista (bar) */
 #itens-lista {
     list-style: none;
     padding: 0;
@@ -94,10 +285,29 @@ h2 {
 }
 
 #itens-lista li {
-    background-color: #f8f9fa;
-    padding: 5px;
-    margin: 5px 0;
-    border-radius: 4px;
+    background-color: #1a1a2e;
+    padding: 10px 14px;
+    margin: 6px 0;
+    border-radius: 5px;
+    color: #ccc;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Fila list */
+#lista {
+    list-style: none;
+    padding: 0;
+    margin-top: 15px;
+}
+
+#lista li {
+    background-color: #1a1a2e;
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    border-radius: 5px;
+    color: #ccc;
 }
 
 .menu {

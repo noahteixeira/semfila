@@ -5,39 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SemFila - Funcionários</title>
     <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/sidebar.css">
 </head>
-<body>
+<body data-cargo="gestor" data-pagina="funcionarios">
 
-    <div class="container">
-        <img src="assets/logo.png" alt="SemFila" class="logo">
-        <h2>Funcionários da Balada</h2>
+    <main class="conteudo-principal">
+        <div class="container">
+            <h2>Funcionários da Balada</h2>
 
-        <div id="msg-sucesso" class="msg-sucesso" style="display: none;">Funcionário desativado com sucesso.</div>
+            <div id="msg-sucesso" class="msg-sucesso" style="display: none;">Funcionário desativado com sucesso.</div>
 
-        <div id="tabela-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>E-mail</th>
-                        <th>Status</th>
-                        <th>Cadastrado em</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody id="lista-funcionarios">
-                </tbody>
-            </table>
+            <div id="tabela-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>E-mail</th>
+                            <th>Status</th>
+                            <th>Cadastrado em</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="lista-funcionarios">
+                    </tbody>
+                </table>
+            </div>
+
+            <p id="msg-vazio" style="display: none; color: #a0a0b0;">Nenhum funcionário cadastrado.</p>
         </div>
+    </main>
 
-        <p id="msg-vazio" style="display: none; color: #a0a0b0;">Nenhum funcionário cadastrado.</p>
-
-        <div class="menu">
-            <a href="cadastrar_funcionario.html" class="btn">Cadastrar Funcionário</a>
-            <a href="area_gestor.html" class="btn">Voltar</a>
-        </div>
-    </div>
-
+    <script src="js/sidebar.js"></script>
     <script src="js/listar_funcionarios.js"></script>
 </body>
 </html>

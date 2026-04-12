@@ -5,31 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SemFila - Relatório Geral</title>
     <link rel="stylesheet" href="css/gestor.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/sidebar.css">
 </head>
-<body>
+<body data-cargo="gestor" data-pagina="rel-geral">
 
-    <div class="container">
-        <img src="assets/logo.png" alt="SemFila" class="logo">
-        <h2>Relatório Geral do Evento</h2>
-        <p class="descricao">Resumo das entradas, ingressos e consumo em uma só tela.</p>
+    <main class="conteudo-principal">
+        <div class="container">
+            <h2>Relatório Geral do Evento</h2>
+            <p class="descricao">Resumo das entradas, ingressos e consumo em uma só tela.</p>
 
-        <div class="filtro">
-            <label for="evento-select">Selecione o Evento:</label>
-            <select id="evento-select">
-                <!-- Eventos serão carregados aqui -->
-            </select>
-            <button id="carregar-btn">Carregar Relatório</button>
+            <div class="filtro">
+                <label for="evento-select">Selecione o Evento:</label>
+                <select id="evento-select">
+                    <!-- Eventos serão carregados aqui -->
+                </select>
+                <button id="carregar-btn">Carregar Relatório</button>
+            </div>
+
+            <div id="relatorio">
+                <!-- Relatório será carregado aqui -->
+            </div>
         </div>
+    </main>
 
-        <div id="relatorio">
-            <!-- Relatório será carregado aqui -->
-        </div>
-
-        <div class="menu">
-            <a href="relatorios.html" class="btn">Voltar</a>
-        </div>
-    </div>
-
+    <script src="js/sidebar.js"></script>
     <script src="js/relatorio_geral.js"></script>
 </body>
 </html>
