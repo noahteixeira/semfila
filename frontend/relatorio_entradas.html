@@ -5,31 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SemFila - Relatório de Entradas</title>
     <link rel="stylesheet" href="css/gestor.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/sidebar.css">
 </head>
-<body>
+<body data-cargo="gestor" data-pagina="rel-entradas">
 
-    <div class="container">
-        <img src="assets/logo.png" alt="SemFila" class="logo">
-        <h2>Relatório de Entradas</h2>
-        <p class="descricao">Veja quem entrou no evento.</p>
+    <main class="conteudo-principal">
+        <div class="container">
+            <h2>Relatório de Entradas</h2>
+            <p class="descricao">Veja quem entrou no evento.</p>
 
-        <div class="filtro">
-            <label for="evento-select">Selecione o Evento:</label>
-            <select id="evento-select">
-                <!-- Eventos serão carregados aqui -->
-            </select>
-            <button id="carregar-btn">Carregar Relatório</button>
+            <div class="filtro">
+                <label for="evento-select">Selecione o Evento:</label>
+                <select id="evento-select">
+                    <!-- Eventos serão carregados aqui -->
+                </select>
+                <button id="carregar-btn">Carregar Relatório</button>
+            </div>
+
+            <div id="relatorio">
+                <!-- Relatório será carregado aqui -->
+            </div>
         </div>
+    </main>
 
-        <div id="relatorio">
-            <!-- Relatório será carregado aqui -->
-        </div>
-
-        <div class="menu">
-            <a href="area_gestor.html" class="btn">Voltar</a>
-        </div>
-    </div>
-
+    <script src="js/sidebar.js"></script>
     <script src="js/relatorio_entradas.js"></script>
 </body>
 </html>

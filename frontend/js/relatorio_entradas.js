@@ -45,31 +45,54 @@ carregarBtn.addEventListener("click", function() {
                 return;
             }
 
-            var totalEntradas = data.length;
-            relatorioDiv.innerHTML += "<p><strong>Total de entradas: " + totalEntradas + "</strong></p>";
+            relatorioDiv.innerHTML += "<p><strong>Total de entradas: " + data.length + "</strong></p>";
 
-            var table = document.createElement("table");
-            table.innerHTML = '<thead><tr>' +
-                '<th>Data/Hora</th>' +
-                '<th>Participante</th>' +
-                '<th>Funcionário</th>' +
-                '<th>Método</th>' +
-                '</tr></thead><tbody></tbody>';
-
-            var tbody = table.querySelector("tbody");
+            // Resumo por método
+            var porMetodo = {};
             data.forEach(function(entrada) {
-                var tr = document.createElement("tr");
-                var dataFormatada = new Date(entrada.registrado_em).toLocaleString("pt-BR");
                 var metodo = entrada.metodo == "qr_code" ? "QR Code" : "RFID";
-                
-                tr.innerHTML = '<td>' + dataFormatada + '</td>' +
-                    '<td>' + entrada.nome + '</td>' +
-                    '<td>' + entrada.funcionario_nome + '</td>' +
-                    '<td>' + metodo + '</td>';
-                tbody.appendChild(tr);
+                if (porMetodo[metodo]) {
+                    porMetodo[metodo] = porMetodo[metodo] + 1;
+                } else {
+                    porMetodo[metodo] = 1;
+                }
             });
 
-            relatorioDiv.appendChild(table);
+            var htmlMetodo = "<h4>Por Método</h4><table><thead><tr><th>Método</th><th>Total</th></tr></thead><tbody>";
+            for (var metodo in porMetodo) {
+                htmlMetodo += "<tr><td>" + metodo + "</td><td>" + porMetodo[metodo] + "</td></tr>";
+            }
+            htmlMetodo += "</tbody></table>";
+            relatorioDiv.innerHTML += htmlMetodo;
+
+            // Resumo por horário
+            var porHora = {};
+            data.forEach(function(entrada) {
+                var hora = entrada.registrado_em.substring(11, 16);
+                if (porHora[hora]) {
+                    porHora[hora] = porHora[hora] + 1;
+                } else {
+                    porHora[hora] = 1;
+                }
+            });
+
+            var htmlHora = "<h4>Por Horário</h4><table><thead><tr><th>Horário</th><th>Total</th></tr></thead><tbody>";
+            for (var hora in porHora) {
+                htmlHora += "<tr><td>" + hora + "</td><td>" + porHora[hora] + "</td></tr>";
+            }
+            htmlHora += "</tbody></table>";
+            relatorioDiv.innerHTML += htmlHora;
+
+            // Lista detalhada
+            var htmlTabela = "<h4>Detalhamento</h4>";
+            htmlTabela += "<table><thead><tr><th>Data/Hora</th><th>Participante</th><th>Funcionário</th><th>Método</th></tr></thead><tbody>";
+            data.forEach(function(entrada) {
+                var dataFormatada = new Date(entrada.registrado_em).toLocaleString("pt-BR");
+                var metodoNome = entrada.metodo == "qr_code" ? "QR Code" : "RFID";
+                htmlTabela += "<tr><td>" + dataFormatada + "</td><td>" + entrada.nome + "</td><td>" + entrada.funcionario_nome + "</td><td>" + metodoNome + "</td></tr>";
+            });
+            htmlTabela += "</tbody></table>";
+            relatorioDiv.innerHTML += htmlTabela;
         })
         .catch(function(error) {
             console.error("Erro:", error);

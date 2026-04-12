@@ -5,43 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SemFila - Meus Eventos</title>
     <link rel="stylesheet" href="css/gestor.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/sidebar.css">
 </head>
-<body>
+<body data-cargo="gestor" data-pagina="eventos">
 
-    <div class="container">
-        <img src="assets/logo.png" alt="SemFila" class="logo">
-        <h2>Meus Eventos</h2>
+    <main class="conteudo-principal">
+        <div class="container">
+            <h2>Meus Eventos</h2>
 
-        <div id="msg-sucesso" class="msg-sucesso" style="display: none;"></div>
-        <div id="msg-erro" class="msg-erro" style="display: none;"></div>
+            <div id="msg-sucesso" class="msg-sucesso" style="display: none;"></div>
+            <div id="msg-erro" class="msg-erro" style="display: none;"></div>
 
-        <div class="menu">
-            <a href="criar_evento.html" class="btn">Criar Novo Evento</a>
+            <div id="tabela-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Data</th>
+                            <th>Horário</th>
+                            <th>Idade Min</th>
+                            <th>Capacidade</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="lista-eventos">
+                    </tbody>
+                </table>
+            </div>
         </div>
+    </main>
 
-        <div id="tabela-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Data</th>
-                        <th>Horário</th>
-                        <th>Idade Min</th>
-                        <th>Capacidade</th>
-                        <th>Status</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody id="lista-eventos">
-                </tbody>
-            </table>
-        </div>
-
-        <div class="menu">
-            <a href="area_gestor.html" class="btn">Voltar</a>
-        </div>
-    </div>
-
+    <script src="js/sidebar.js"></script>
     <script src="js/listar_eventos.js"></script>
 </body>
 </html>

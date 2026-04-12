@@ -5,12 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SemFila - Carrinho de Ingressos</title>
     <link rel="stylesheet" href="css/carrinho.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/sidebar.css">
 </head>
-<body>
+<body data-cargo="baladeiro" data-pagina="eventos">
 
-    <div class="container">
-        <img src="assets/logo.png" alt="SemFila" class="logo">
-        <h2>Carrinho de Ingressos</h2>
+    <main class="conteudo-principal">
+        <div class="container">
+            <h2>Carrinho de Ingressos</h2>
 
         <div id="msg-vazio" class="msg-info" style="display: none;">
             <p>Seu carrinho está vazio!</p>
@@ -55,7 +57,9 @@
             </div>
         </div>
     </div>
+    </main>
 
+    <script src="js/sidebar.js"></script>
     <script src="js/carrinho_manager.js"></script>
     <script src="js/carrinho.js"></script>
 </body>

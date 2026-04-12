@@ -20,12 +20,6 @@ body {
     margin: 20px auto;
 }
 
-.logo {
-    width: 180px;
-    margin-bottom: 10px;
-    display: block;
-}
-
 h2 {
     color: #e94560;
     margin-bottom: 30px;
@@ -208,25 +202,4 @@ h3 {
 .indisponivel .form-compra button {
     background-color: #95a5a6;
     cursor: not-allowed;
-}
-
-.menu {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-}
-
-.btn {
-    display: inline-block;
-    padding: 12px 30px;
-    background-color: #e94560;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 5px;
-    text-align: center;
-    font-weight: bold;
-}
-
-.btn:hover {
-    background-color: #c73652;
 }

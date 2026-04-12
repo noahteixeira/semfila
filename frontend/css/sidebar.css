@@ -1,0 +1,802 @@
+/* sidebar.css - Layout compartilhado com sidebar */
+
+body.tem-sidebar {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: stretch;
+    min-height: 100vh;
+    height: auto;
+    padding: 0;
+    margin: 0;
+    background-color: #1a1a2e;
+}
+
+body.tem-sidebar .container,
+body.tem-sidebar .container-cadastro {
+    max-width: 100%;
+    margin: 0;
+    border-radius: 0;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    min-width: 250px;
+    background-color: #1a1a2e;
+    min-height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+    border-right: 1px solid #2a2a4a;
+    z-index: 100;
+}
+
+.sidebar .logo-area {
+    padding: 25px 20px;
+    text-align: center;
+    border-bottom: 1px solid #2a2a4a;
+}
+
+.sidebar .logo-area img {
+    width: 90px;
+}
+
+.sidebar nav {
+    padding: 10px 0;
+}
+
+.sidebar nav a {
+    display: flex;
+    align-items: center;
+    padding: 11px 20px;
+    color: #8a8aa0;
+    text-decoration: none;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+    border: none;
+    background: none;
+    width: auto;
+    text-align: left;
+    border-radius: 0;
+    margin: 0;
+}
+
+.sidebar nav a i {
+    width: 20px;
+    margin-right: 10px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.sidebar nav a:hover {
+    background-color: #16213e;
+    color: #fff;
+}
+
+.sidebar nav a.ativo {
+    background-color: #e94560;
+    color: #fff;
+}
+
+.sidebar nav .separador {
+    height: 1px;
+    background-color: #2a2a4a;
+    margin: 8px 15px;
+}
+
+.sidebar nav .titulo-secao {
+    padding: 8px 20px 4px;
+    font-size: 11px;
+    color: #555570;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: Arial, sans-serif;
+}
+
+/* Conteudo principal */
+.conteudo-principal {
+    margin-left: 250px;
+    flex: 1;
+    padding: 0;
+    min-height: 100vh;
+    background-color: #1a1a2e;
+}
+
+/* Botao toggle mobile */
+.sidebar-toggle {
+    display: none;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 200;
+    background-color: #1a1a2e;
+    color: #fff;
+    border: 1px solid #2a2a4a;
+    padding: 8px 11px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    width: auto;
+}
+
+/* ============================================
+   CONTENT AREA - FULL WIDTH LAYOUT REDESIGN
+   ============================================ */
+
+/* --- Container Base --- */
+body.tem-sidebar .container {
+    padding: 40px 50px;
+    text-align: left;
+}
+
+/* --- Page Headings --- */
+body.tem-sidebar .container > h1,
+body.tem-sidebar .container > h2 {
+    text-align: left;
+    padding-bottom: 16px;
+    border-bottom: 3px solid currentColor;
+    margin-bottom: 30px;
+    letter-spacing: 0.3px;
+}
+
+/* --- Subtitle / Description --- */
+body.tem-sidebar .container > h1 + p,
+body.tem-sidebar .container > h2 + .descricao {
+    font-size: 15px;
+    margin-top: -20px;
+    margin-bottom: 30px;
+    opacity: 0.6;
+    line-height: 1.5;
+}
+
+/* --- Messages --- */
+body.tem-sidebar .msg-erro,
+body.tem-sidebar .msg-sucesso,
+body.tem-sidebar .msg-info {
+    border-radius: 8px;
+    padding: 14px 20px;
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+body.tem-sidebar .msg-erro {
+    border-left: 4px solid #e94560;
+}
+
+body.tem-sidebar .msg-sucesso {
+    border-left: 4px solid #2ecc71;
+}
+
+body.tem-sidebar .msg-info {
+    border-left: 4px solid #f39c12;
+}
+
+/* --- Forms --- */
+body.tem-sidebar form {
+    max-width: 600px;
+}
+
+body.tem-sidebar form label {
+    display: block;
+    text-align: left;
+    margin-bottom: 6px;
+    font-weight: bold;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+body.tem-sidebar form input,
+body.tem-sidebar form select,
+body.tem-sidebar form textarea {
+    width: 100%;
+    padding: 12px 16px;
+    margin-bottom: 22px;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+body.tem-sidebar form input:focus,
+body.tem-sidebar form select:focus,
+body.tem-sidebar form textarea:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(233, 69, 96, 0.12);
+}
+
+body.tem-sidebar form textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+body.tem-sidebar form button[type="submit"] {
+    display: inline-block;
+    width: auto;
+    min-width: 180px;
+    padding: 12px 32px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+body.tem-sidebar form button[type="submit"]:hover {
+    transform: translateY(-1px);
+}
+
+/* --- Tables --- */
+body.tem-sidebar #tabela-container {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    overflow-x: auto;
+    max-width: 100%;
+}
+
+body.tem-sidebar table {
+    width: 100%;
+    max-width: 900px;
+    border-collapse: collapse;
+}
+
+body.tem-sidebar table thead th {
+    padding: 14px 16px;
+    text-align: left;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+body.tem-sidebar table tbody td {
+    padding: 12px 16px;
+    font-size: 14px;
+    vertical-align: middle;
+}
+
+body.tem-sidebar table tbody td:last-child {
+    white-space: nowrap;
+}
+
+body.tem-sidebar table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+body.tem-sidebar table tbody tr {
+    transition: background-color 0.15s;
+}
+
+/* --- Badges --- */
+body.tem-sidebar .badge-ativo,
+body.tem-sidebar .badge-inativo {
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+body.tem-sidebar .badge-ativo {
+    background-color: rgba(46, 204, 113, 0.15);
+    color: #2ecc71;
+}
+
+body.tem-sidebar .badge-inativo {
+    background-color: rgba(233, 69, 96, 0.15);
+    color: #e94560;
+}
+
+body.tem-sidebar .badge-encerrado {
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    display: inline-block;
+    background-color: rgba(149, 165, 166, 0.2);
+    color: #95a5a6;
+}
+
+body.tem-sidebar .badge-cancelado {
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    display: inline-block;
+    background-color: rgba(231, 76, 60, 0.15);
+    color: #e74c3c;
+}
+
+/* --- Cards Grid (Events, Tickets, History) --- */
+body.tem-sidebar #lista-eventos,
+body.tem-sidebar #lista-ingressos,
+body.tem-sidebar #historico-lista {
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 24px;
+    margin-top: 10px;
+}
+
+body.tem-sidebar .evento,
+body.tem-sidebar .card-ingresso {
+    border-radius: 12px;
+    padding: 24px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+body.tem-sidebar .evento:hover,
+body.tem-sidebar .card-ingresso:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* --- General Buttons --- */
+body.tem-sidebar .btn {
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+body.tem-sidebar .btn:hover {
+    transform: translateY(-1px);
+}
+
+body.tem-sidebar .btn-editar,
+body.tem-sidebar .btn-encerrar {
+    border-radius: 6px;
+    padding: 6px 16px;
+    font-size: 13px;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+body.tem-sidebar .btn-editar:hover,
+body.tem-sidebar .btn-encerrar:hover {
+    opacity: 0.85;
+}
+
+/* --- Link Carrinho --- */
+body.tem-sidebar .link-carrinho {
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 30px;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+body.tem-sidebar .link-carrinho:hover {
+    transform: translateY(-1px);
+}
+
+/* --- Profile Page --- */
+body.tem-sidebar .dados {
+    border-radius: 12px;
+    padding: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    margin-bottom: 30px;
+}
+
+body.tem-sidebar .dados p {
+    padding: 12px 0;
+    margin-bottom: 0;
+    font-size: 15px;
+}
+
+body.tem-sidebar .dados p + p {
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+body.tem-sidebar .dados strong {
+    display: inline-block;
+    min-width: 180px;
+}
+
+/* --- Cart Page --- */
+body.tem-sidebar .tabela-carrinho {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+body.tem-sidebar .resumo-compra {
+    border-radius: 12px;
+}
+
+body.tem-sidebar .botoes-acao .btn {
+    border-radius: 8px;
+    padding: 14px 35px;
+    font-size: 15px;
+}
+
+/* --- Comprar Ingresso --- */
+body.tem-sidebar .evento-detalhes {
+    border-radius: 12px;
+}
+
+body.tem-sidebar .lote {
+    border-radius: 10px;
+    transition: border-color 0.2s, transform 0.15s;
+}
+
+body.tem-sidebar .lote:hover {
+    border-color: #e94560;
+    transform: translateY(-2px);
+}
+
+/* --- Pulseira Info --- */
+body.tem-sidebar #com-pulseira > table {
+    max-width: 500px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    background-color: rgba(0, 0, 0, 0.15);
+}
+
+body.tem-sidebar #com-pulseira > table td {
+    padding: 12px 20px;
+}
+
+body.tem-sidebar #area-saldo {
+    max-width: 400px;
+    margin-top: 30px;
+}
+
+body.tem-sidebar #area-saldo h3 {
+    margin-bottom: 15px;
+}
+
+/* --- Dashboard / Welcome --- */
+body.tem-sidebar .acoes {
+    margin-top: 40px;
+}
+
+body.tem-sidebar .btn-desativar {
+    border-radius: 8px;
+    transition: background-color 0.2s;
+}
+
+/* --- Senha Gerada (admin) --- */
+body.tem-sidebar .senha-gerada {
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* --- Filter (Reports) --- */
+body.tem-sidebar .filtro {
+    max-width: 600px;
+    margin-bottom: 30px;
+}
+
+body.tem-sidebar .filtro label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+body.tem-sidebar .filtro select {
+    width: 100%;
+    padding: 12px 16px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+body.tem-sidebar .filtro select:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(233, 69, 96, 0.12);
+}
+
+body.tem-sidebar .filtro button {
+    display: inline-block;
+    width: auto;
+    min-width: 180px;
+    padding: 12px 32px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+body.tem-sidebar .filtro button:hover {
+    transform: translateY(-1px);
+}
+
+/* --- Report Content --- */
+body.tem-sidebar #relatorio {
+    margin-top: 20px;
+}
+
+body.tem-sidebar #relatorio table {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* --- Validation / Identification Sections --- */
+body.tem-sidebar .validacao-container,
+body.tem-sidebar .identificacao {
+    max-width: 600px;
+    margin-bottom: 25px;
+}
+
+body.tem-sidebar .campo-qr {
+    margin-bottom: 25px;
+}
+
+body.tem-sidebar .participante-info {
+    border-radius: 12px;
+    padding: 25px;
+    margin-top: 20px;
+}
+
+body.tem-sidebar .btn-liberar {
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+/* --- Empty State --- */
+body.tem-sidebar #msg-vazio {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+/* --- Funcionario Content --- */
+body.tem-sidebar .identificacao label,
+body.tem-sidebar .campo-qr label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+body.tem-sidebar .identificacao input,
+body.tem-sidebar .campo-qr input {
+    width: 100%;
+    padding: 12px 16px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+body.tem-sidebar .identificacao input:focus,
+body.tem-sidebar .campo-qr input:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(233, 69, 96, 0.12);
+}
+
+body.tem-sidebar .identificacao button,
+body.tem-sidebar .campo-qr button {
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+body.tem-sidebar .identificacao button:hover,
+body.tem-sidebar .campo-qr button:hover {
+    transform: translateY(-1px);
+}
+
+/* --- Bar / Consumo Controls --- */
+body.tem-sidebar #cliente-info {
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 25px;
+    max-width: 600px;
+}
+
+body.tem-sidebar #consumo-form {
+    max-width: 600px;
+}
+
+body.tem-sidebar #consumo-form select,
+body.tem-sidebar #consumo-form input {
+    padding: 10px 14px;
+    border-radius: 8px;
+    transition: border-color 0.2s;
+}
+
+body.tem-sidebar #consumo-form button {
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+body.tem-sidebar #consumo-form button:hover {
+    transform: translateY(-1px);
+}
+
+body.tem-sidebar #itens-lista {
+    list-style: none;
+    padding: 0;
+}
+
+body.tem-sidebar #itens-lista li {
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-bottom: 6px;
+}
+
+/* --- Controle Fila --- */
+body.tem-sidebar #lista {
+    list-style: none;
+    padding: 0;
+    max-width: 600px;
+}
+
+body.tem-sidebar #lista li {
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+
+/* --- Evento Select (funcionario) --- */
+body.tem-sidebar .evento-select {
+    margin-bottom: 15px;
+}
+
+body.tem-sidebar .evento-select select {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 8px;
+}
+
+/* --- Editar Baladeiro (cadastro.css page) --- */
+body.tem-sidebar .container-cadastro {
+    padding: 40px 50px;
+    text-align: left;
+}
+
+body.tem-sidebar .container-cadastro > h1 {
+    text-align: left;
+    padding-bottom: 16px;
+    border-bottom: 3px solid currentColor;
+    margin-bottom: 30px;
+    letter-spacing: 0.3px;
+}
+
+body.tem-sidebar .container-cadastro form {
+    max-width: 600px;
+}
+
+body.tem-sidebar .container-cadastro form label {
+    display: block;
+    text-align: left;
+    margin-bottom: 6px;
+    font-weight: bold;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+body.tem-sidebar .container-cadastro form input {
+    padding: 12px 16px;
+    margin-bottom: 22px;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+body.tem-sidebar .container-cadastro form input:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(233, 69, 96, 0.12);
+}
+
+body.tem-sidebar .container-cadastro form button {
+    display: inline-block;
+    width: auto;
+    min-width: 180px;
+    padding: 12px 32px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+body.tem-sidebar .container-cadastro form button:hover {
+    transform: translateY(-1px);
+}
+
+/* --- Admin Table Container --- */
+body.tem-sidebar table td .btn-acao {
+    border-radius: 6px;
+    transition: opacity 0.2s;
+}
+
+body.tem-sidebar table td .btn-acao:hover {
+    opacity: 0.85;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.25s ease;
+    }
+
+    .sidebar.aberta {
+        transform: translateX(0);
+    }
+
+    .conteudo-principal {
+        margin-left: 0;
+        padding: 20px;
+        padding-top: 60px;
+    }
+
+    .sidebar-toggle {
+        display: block;
+    }
+
+    /* Content area responsive */
+    body.tem-sidebar .container,
+    body.tem-sidebar .container-cadastro {
+        padding: 25px 20px;
+    }
+
+    body.tem-sidebar #lista-eventos,
+    body.tem-sidebar #lista-ingressos,
+    body.tem-sidebar #historico-lista {
+        grid-template-columns: 1fr;
+    }
+
+    body.tem-sidebar form {
+        max-width: 100%;
+    }
+
+    body.tem-sidebar .container-cadastro form {
+        max-width: 100%;
+    }
+
+    body.tem-sidebar .filtro {
+        max-width: 100%;
+    }
+
+    body.tem-sidebar #consumo-form,
+    body.tem-sidebar #cliente-info,
+    body.tem-sidebar #lista {
+        max-width: 100%;
+    }
+
+    body.tem-sidebar .dados strong {
+        min-width: auto;
+        display: block;
+        margin-bottom: 4px;
+    }
+
+    body.tem-sidebar .validacao-container,
+    body.tem-sidebar .identificacao {
+        max-width: 100%;
+    }
+
+    body.tem-sidebar .flex-container {
+        flex-direction: column;
+    }
+
+    body.tem-sidebar .botoes-acao {
+        flex-direction: column;
+    }
+
+    body.tem-sidebar .botoes-acao .btn {
+        width: 100%;
+        text-align: center;
+    }
+}
