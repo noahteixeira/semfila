@@ -1,3 +1,11 @@
+v1.2.5 | 11/04/2026 - CRUD 5: Pulseiras / Tags RFID. - NOAH
+- Criado assinar_pulseira.php para o baladeiro assinar uma pulseira e gera código RFID automáticamente.
+- Criado ver_pulseira.php para visualizar saldo, status e dados da pulseira.
+- Criado atualizar_pulseira.php para adicionar saldo e renovar assinatura.
+- Criado cancelar_pulseira.php para cancelar pulseira.
+- Criada página pulseira.html.
+- Adicionado botão "Minha Pulseira" na area_baladeiro.html.
+
 v1.2.4 | 11/04/2026 - Correções no CRUD 11 (Relatórios do Gestor). - NOAH
 - Corrigido para relatorio_bar.js exibir produtos mais vendidos e receita total.
 - Corrigido o botão de "Voltar" no relatorio_entradas.html e relatorio_bar.html para apontar para relatorios.html.
