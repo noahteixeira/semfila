@@ -7,9 +7,6 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #1a1a2e;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     min-height: 100vh;
     color: #fff;
 }
@@ -20,7 +17,6 @@ body {
     border-radius: 10px;
     width: 100%;
     max-width: 500px;
-    text-align: center;
 }
 
 h1 {
@@ -40,24 +36,4 @@ h1 {
 
 .dados strong {
     color: #fff;
-}
-
-.menu {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.btn {
-    display: inline-block;
-    padding: 12px;
-    background-color: #e94560;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 5px;
-    text-align: center;
-}
-
-.btn:hover {
-    background-color: #c73652;
 }

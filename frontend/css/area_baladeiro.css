@@ -53,13 +53,6 @@ p {
     font-size: 14px;
 }
 
-.menu {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 30px;
-}
-
 .btn {
     display: inline-block;
     padding: 12px;

@@ -551,7 +551,7 @@ body.tem-sidebar #msg-vazio {
     padding: 40px 20px;
 }
 
-/* --- Funcionario Light Theme Content --- */
+/* --- Funcionario Content --- */
 body.tem-sidebar .identificacao label,
 body.tem-sidebar .campo-qr label {
     display: block;
@@ -575,7 +575,7 @@ body.tem-sidebar .campo-qr input {
 body.tem-sidebar .identificacao input:focus,
 body.tem-sidebar .campo-qr input:focus {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.12);
+    box-shadow: 0 0 0 3px rgba(233, 69, 96, 0.12);
 }
 
 body.tem-sidebar .identificacao button,
@@ -713,22 +713,6 @@ body.tem-sidebar .container-cadastro form button {
 
 body.tem-sidebar .container-cadastro form button:hover {
     transform: translateY(-1px);
-}
-
-body.tem-sidebar .container-cadastro .msg-erro,
-body.tem-sidebar .container-cadastro .msg-sucesso {
-    border-radius: 8px;
-    padding: 14px 20px;
-    margin-bottom: 25px;
-    text-align: left;
-}
-
-body.tem-sidebar .container-cadastro .msg-erro {
-    border-left: 4px solid #e94560;
-}
-
-body.tem-sidebar .container-cadastro .msg-sucesso {
-    border-left: 4px solid #2ecc71;
 }
 
 /* --- Admin Table Container --- */
