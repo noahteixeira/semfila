@@ -20,117 +20,8 @@ function carregarEventos() {
             });
         })
         .catch(function(error) {
-            console.error("Erro ao carregar eventos:", error);
-            relatorioDiv.innerHTML = '<p class="msg-erro">Não foi possível carregar os eventos.</p>';
+            console.error("Erro:", error);
         });
-}
-
-function formatValue(key, value) {
-    if (value === null || value === undefined) {
-        return "";
-    }
-
-    if (typeof value === "number") {
-        if (String(key).toLowerCase().includes("valor") || String(key).toLowerCase().includes("receita") || String(key).toLowerCase().includes("total")) {
-            return "R$ " + value.toFixed(2);
-        }
-        return value;
-    }
-
-    if (String(key).toLowerCase().includes("data") || String(key).toLowerCase().includes("hora")) {
-        var date = new Date(value);
-        return isNaN(date.getTime()) ? value : date.toLocaleString("pt-BR");
-    }
-
-    return value;
-}
-
-function criarTabela(data) {
-    var table = document.createElement("table");
-    var campos = Object.keys(data[0] || {});
-
-    var thead = document.createElement("thead");
-    var tr = document.createElement("tr");
-    campos.forEach(function(campo) {
-        var th = document.createElement("th");
-        th.textContent = campo.replace(/_/g, " ").replace(/\b\w/g, function(l) { return l.toUpperCase(); });
-        tr.appendChild(th);
-    });
-    thead.appendChild(tr);
-    table.appendChild(thead);
-
-    var tbody = document.createElement("tbody");
-    data.forEach(function(item) {
-        var tr = document.createElement("tr");
-        campos.forEach(function(campo) {
-            var td = document.createElement("td");
-            td.textContent = formatValue(campo, item[campo]);
-            tr.appendChild(td);
-        });
-        tbody.appendChild(tr);
-    });
-    table.appendChild(tbody);
-    return table;
-}
-
-function criarSecao(titulo, conteudo) {
-    var section = document.createElement("div");
-    var heading = document.createElement("h3");
-    heading.textContent = titulo;
-    section.appendChild(heading);
-    section.appendChild(conteudo);
-    return section;
-}
-
-function montarResposta(data) {
-    relatorioDiv.innerHTML = "<h3>Relatório Geral do Evento</h3>";
-
-    if (!data || (Array.isArray(data) && data.length === 0) || (Object.keys(data).length === 0 && data.constructor === Object)) {
-        relatorioDiv.innerHTML += "<p>Nenhum dado disponível para este evento.</p>";
-        return;
-    }
-
-    if (data.entradas) {
-        var entradasSection = criarSecao("Entradas", criarTabela(Array.isArray(data.entradas) ? data.entradas : [data.entradas]));
-        relatorioDiv.appendChild(entradasSection);
-    }
-
-    if (data.ingressos) {
-        var ingressosSection = criarSecao("Ingressos", criarTabela(Array.isArray(data.ingressos) ? data.ingressos : [data.ingressos]));
-        relatorioDiv.appendChild(ingressosSection);
-    }
-
-    if (data.bar) {
-        var barSection = criarSecao("Consumo do Bar", criarTabela(Array.isArray(data.bar) ? data.bar : [data.bar]));
-        relatorioDiv.appendChild(barSection);
-    }
-
-    if (data.resumo) {
-        var resumoContainer = document.createElement("div");
-        if (Array.isArray(data.resumo) && data.resumo.length > 0) {
-            resumoContainer.appendChild(criarTabela(data.resumo));
-        } else {
-            var table = document.createElement("table");
-            var tbody = document.createElement("tbody");
-            Object.keys(data.resumo || {}).forEach(function(chave) {
-                var tr = document.createElement("tr");
-                var tdLabel = document.createElement("td");
-                var tdValue = document.createElement("td");
-                tdLabel.textContent = chave.replace(/_/g, " ").replace(/\b\w/g, function(l) { return l.toUpperCase(); });
-                tdValue.textContent = formatValue(chave, data.resumo[chave]);
-                tr.appendChild(tdLabel);
-                tr.appendChild(tdValue);
-                tbody.appendChild(tr);
-            });
-            table.appendChild(tbody);
-            resumoContainer.appendChild(table);
-        }
-        relatorioDiv.appendChild(criarSecao("Resumo Geral", resumoContainer));
-    }
-
-    if (!data.entradas && !data.ingressos && !data.bar && !data.resumo) {
-        relatorioDiv.innerHTML += "<p>O servidor retornou um formato de relatório não reconhecido.</p>";
-    }
 }
 
 carregarBtn.addEventListener("click", function() {
@@ -147,10 +38,68 @@ carregarBtn.addEventListener("click", function() {
                 alert(data.erro);
                 return;
             }
-            montarResposta(data);
+
+            relatorioDiv.innerHTML = "";
+
+            // Resumo geral
+            if (data.resumo && data.resumo.length > 0) {
+                var htmlResumo = "<h3>Resumo Geral</h3>";
+                htmlResumo += "<table><thead><tr><th>Métrica</th><th>Valor</th></tr></thead><tbody>";
+                data.resumo.forEach(function(item) {
+                    var valor = item.valor;
+                    if (item.metrica.toLowerCase().indexOf("receita") >= 0) {
+                        valor = "R$ " + Number(item.valor).toFixed(2);
+                    }
+                    htmlResumo += "<tr><td>" + item.metrica + "</td><td>" + valor + "</td></tr>";
+                });
+                htmlResumo += "</tbody></table>";
+                relatorioDiv.innerHTML += htmlResumo;
+            }
+
+            // Entradas
+            if (data.entradas && data.entradas.length > 0) {
+                var htmlEntradas = "<h3>Entradas</h3>";
+                htmlEntradas += "<table><thead><tr><th>Tipo</th><th>Descrição</th><th>Total</th></tr></thead><tbody>";
+                data.entradas.forEach(function(item) {
+                    htmlEntradas += "<tr><td>" + item.tipo + "</td><td>" + item.descricao + "</td><td>" + item.total + "</td></tr>";
+                });
+                htmlEntradas += "</tbody></table>";
+                relatorioDiv.innerHTML += htmlEntradas;
+            }
+
+            // Ingressos
+            if (data.ingressos && data.ingressos.length > 0) {
+                var htmlIngressos = "<h3>Ingressos</h3>";
+                htmlIngressos += "<table><thead><tr><th>Tipo</th><th>Descrição</th><th>Vendidos</th><th>Não Utilizados</th><th>Receita</th></tr></thead><tbody>";
+                data.ingressos.forEach(function(item) {
+                    var receita = item.receita !== "" ? "R$ " + Number(item.receita).toFixed(2) : "";
+                    var vendidos = item.ingressos_vendidos !== "" ? item.ingressos_vendidos : "";
+                    var naoUtilizados = item.ingressos_nao_utilizados !== "" ? item.ingressos_nao_utilizados : "";
+                    htmlIngressos += "<tr><td>" + item.tipo + "</td><td>" + item.descricao + "</td><td>" + vendidos + "</td><td>" + naoUtilizados + "</td><td>" + receita + "</td></tr>";
+                });
+                htmlIngressos += "</tbody></table>";
+                relatorioDiv.innerHTML += htmlIngressos;
+            }
+
+            // Bar
+            if (data.bar && data.bar.length > 0) {
+                var htmlBar = "<h3>Consumo do Bar</h3>";
+                htmlBar += "<table><thead><tr><th>Tipo</th><th>Descrição</th><th>Quantidade</th><th>Receita</th></tr></thead><tbody>";
+                data.bar.forEach(function(item) {
+                    var receita = item.receita !== "" ? "R$ " + Number(item.receita).toFixed(2) : "";
+                    var quantidade = item.quantidade !== "" ? item.quantidade : "";
+                    htmlBar += "<tr><td>" + item.tipo + "</td><td>" + item.descricao + "</td><td>" + quantidade + "</td><td>" + receita + "</td></tr>";
+                });
+                htmlBar += "</tbody></table>";
+                relatorioDiv.innerHTML += htmlBar;
+            }
+
+            if (!data.entradas && !data.ingressos && !data.bar && !data.resumo) {
+                relatorioDiv.innerHTML = "<p>Nenhum dado disponível para este evento.</p>";
+            }
         })
         .catch(function(error) {
-            console.error("Erro ao carregar relatório geral:", error);
+            console.error("Erro:", error);
             alert("Erro ao carregar relatório geral.");
         });
 });

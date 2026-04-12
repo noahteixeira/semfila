@@ -1,3 +1,7 @@
+v1.2.4 | 11/04/2026 - Correções no CRUD 11 (Relatórios do Gestor). - NOAH
+- Corrigido para relatorio_bar.js exibir produtos mais vendidos e receita total.
+- Corrigido o botão de "Voltar" no relatorio_entradas.html e relatorio_bar.html para apontar para relatorios.html.
+
 v1.2.3 | 10/04/2026 - Adição do backend de relatórios do gestor. - GUSTAVO
 - Criados os endpoints backend/relatorio_ingressos.php e backend/relatorio_geral.php para consultas de gestor.
 - Implementada a verificação de privilégio de gestor e acesso ao evento em todos os relatórios.

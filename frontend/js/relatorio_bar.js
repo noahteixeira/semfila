@@ -40,33 +40,41 @@ carregarBtn.addEventListener("click", function() {
                 return;
             }
 
-            relatorioDiv.innerHTML = "<h3>Consumos Registrados</h3>";
-            if (data.length == 0) {
-                relatorioDiv.innerHTML += "<p>Nenhum consumo registrado para este evento.</p>";
-                return;
+            relatorioDiv.innerHTML = "<h3>Relatório do Bar</h3>";
+
+            // Receita total
+            relatorioDiv.innerHTML += "<p><strong>Receita total do bar: R$ " + Number(data.receita_total).toFixed(2) + "</strong></p>";
+
+            // Produtos mais vendidos
+            if (data.produtos.length > 0) {
+                var htmlProdutos = "<h4>Produtos Mais Vendidos</h4>";
+                htmlProdutos += "<table><thead><tr><th>Produto</th><th>Quantidade</th><th>Receita</th></tr></thead><tbody>";
+                data.produtos.forEach(function(produto) {
+                    htmlProdutos += "<tr><td>" + produto.produto + "</td><td>" + produto.quantidade + "</td><td>R$ " + Number(produto.receita).toFixed(2) + "</td></tr>";
+                });
+                htmlProdutos += "</tbody></table>";
+                relatorioDiv.innerHTML += htmlProdutos;
             }
 
-            var table = document.createElement("table");
-            table.innerHTML = '<thead><tr>' +
-                '<th>Data/Hora</th>' +
-                '<th>Cliente</th>' +
-                '<th>Funcionário</th>' +
-                '<th>Itens</th>' +
-                '<th>Total</th>' +
-                '</tr></thead><tbody></tbody>';
-
-            var tbody = table.querySelector("tbody");
-            data.forEach(function(consumo) {
-                var tr = document.createElement("tr");
-                tr.innerHTML = '<td>' + new Date(consumo.registrado_em).toLocaleString() + '</td>' +
-                    '<td>' + consumo.usuario_nome + '</td>' +
-                    '<td>' + consumo.funcionario_nome + '</td>' +
-                    '<td>' + (consumo.itens || "N/A") + '</td>' +
-                    '<td>R$ ' + parseFloat(consumo.valor_total).toFixed(2) + '</td>';
-                tbody.appendChild(tr);
-            });
-
-            relatorioDiv.appendChild(table);
+            // Consumos individuais
+            if (data.consumos.length > 0) {
+                var htmlConsumos = "<h4>Consumos Registrados</h4>";
+                htmlConsumos += "<table><thead><tr><th>Data/Hora</th><th>Cliente</th><th>Funcionário</th><th>Itens</th><th>Total</th></tr></thead><tbody>";
+                data.consumos.forEach(function(consumo) {
+                    var dataFormatada = new Date(consumo.registrado_em).toLocaleString("pt-BR");
+                    htmlConsumos += "<tr>" +
+                        "<td>" + dataFormatada + "</td>" +
+                        "<td>" + consumo.usuario_nome + "</td>" +
+                        "<td>" + consumo.funcionario_nome + "</td>" +
+                        "<td>" + (consumo.itens || "N/A") + "</td>" +
+                        "<td>R$ " + parseFloat(consumo.valor_total).toFixed(2) + "</td>" +
+                        "</tr>";
+                });
+                htmlConsumos += "</tbody></table>";
+                relatorioDiv.innerHTML += htmlConsumos;
+            } else {
+                relatorioDiv.innerHTML += "<p>Nenhum consumo registrado para este evento.</p>";
+            }
         })
         .catch(function(error) {
             console.error("Erro:", error);
