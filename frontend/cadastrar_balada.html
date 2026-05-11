@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SemFila - Cadastrar Balada</title>
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+</head>
+<body data-cargo="admin" data-pagina="cadastrar-balada">
+
+    <main class="conteudo-principal">
+        <div class="container">
+            <h2>Cadastrar Nova Balada</h2>
+
+            <div id="msg-erro" class="msg-erro" style="display: none;"></div>
+            <div id="msg-sucesso" class="msg-sucesso" style="display: none;">Balada cadastrada com sucesso.</div>
+
+            <form action="../backend/cadastrar_balada.php" method="POST" id="form-balada">
+
+                <label for="gestor_id">Gestor Responsável</label>
+                <select id="gestor_id" name="gestor_id" required>
+                    <option value="">Carregando gestores...</option>
+                </select>
+
+                <label for="nome">Nome da Balada</label>
+                <input type="text" id="nome" name="nome" placeholder="Nome da balada" required>
+
+                <label for="cnpj">CNPJ</label>
+                <input type="text" id="cnpj" name="cnpj" placeholder="00.000.000/0000-00" maxlength="18" required>
+
+                <label for="endereco">Endereço</label>
+                <input type="text" id="endereco" name="endereco" placeholder="Rua, número, bairro" required>
+
+                <label for="cidade">Cidade</label>
+                <input type="text" id="cidade" name="cidade" placeholder="Cidade da balada" required>
+
+                <label for="capacidade_maxima">Capacidade Máxima</label>
+                <input type="number" id="capacidade_maxima" name="capacidade_maxima" min="1" placeholder="Quantidade máxima de pessoas" required>
+
+                <label for="logo_url">URL da Logo</label>
+                <input type="text" id="logo_url" name="logo_url" placeholder="https://exemplo.com/logo.png">
+
+                <button type="submit" id="btn-submit">Cadastrar Balada</button>
+            </form>
+        </div>
+    </main>
+
+    <script src="js/sidebar.js"></script>
+    <script src="js/cadastrar_balada.js"></script>
+</body>
+</html>

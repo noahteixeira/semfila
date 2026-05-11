@@ -2,14 +2,24 @@
 session_start();
 include("conexao.php");
 
+function redirecionar_login($parametros = []) {
+    $query = http_build_query($parametros);
+    $destino = "../frontend/login.html";
+    if (!empty($query)) {
+        $destino .= "?" . $query;
+    }
+
+    header("Location: " . $destino);
+    exit();
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $email = $_POST["email"];
     $senha = $_POST["senha"];
 
     if (empty($email) || empty($senha)) {
-        header("Location: ../frontend/login.html?erro=1");
-        exit();
+        redirecionar_login(["erro" => 1]);
     }
 
     $sql = "SELECT id, nome, senha, tipo, ativo FROM usuarios WHERE email = ?";
@@ -21,8 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($usuario = mysqli_fetch_assoc($resultado)) {
 
         if ($usuario["ativo"] == 0) {
-            header("Location: ../frontend/login.html?erro=1");
-            exit();
+            redirecionar_login(["erro" => 1]);
         }
 
         if (password_verify($senha, $usuario["senha"])) {
@@ -38,8 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 mysqli_stmt_close($stmt_contrato);
 
                 if (!$contrato || $contrato["status"] == "inativo" || $contrato["data_vencimento"] < date("Y-m-d")) {
-                    header("Location: ../frontend/login.html?erro=1");
-                    exit();
+                    redirecionar_login(["contrato" => 1]);
                 }
             }
 
@@ -59,18 +67,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit();
 
         } else {
-            header("Location: ../frontend/login.html?erro=1");
-            exit();
+            redirecionar_login(["erro" => 1]);
         }
 
     } else {
-        header("Location: ../frontend/login.html?erro=1");
-        exit();
+        redirecionar_login(["erro" => 1]);
     }
 
 } else {
-    header("Location: ../frontend/login.html");
-    exit();
+    redirecionar_login();
 }
 
 ?>

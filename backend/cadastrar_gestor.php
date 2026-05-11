@@ -55,6 +55,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     mysqli_stmt_close($stmt_check_cnpj);
 
+    mysqli_begin_transaction($conexao);
+
     // gerar senha automatica
     $senha_gerada = substr(str_shuffle("abcdefghijklmnopqrstuvwxyz0123456789"), 0, 8);
     $senha_hash = password_hash($senha_gerada, PASSWORD_DEFAULT);
@@ -65,6 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     mysqli_stmt_bind_param($stmt_usuario, "sss", $nome, $email, $senha_hash);
 
     if (!mysqli_stmt_execute($stmt_usuario)) {
+        mysqli_rollback($conexao);
         header("Location: ../frontend/cadastrar_gestor.html?erro=5");
         exit();
     }
@@ -78,8 +81,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     mysqli_stmt_bind_param($stmt_contrato, "isssss", $usuario_id, $cnpj_limpo, $razao_social, $data_inicio, $data_vencimento, $observacoes);
 
     if (mysqli_stmt_execute($stmt_contrato)) {
+        mysqli_commit($conexao);
         header("Location: ../frontend/cadastrar_gestor.html?sucesso=1&senha=" . urlencode($senha_gerada));
     } else {
+        mysqli_rollback($conexao);
         header("Location: ../frontend/cadastrar_gestor.html?erro=5");
     }
 

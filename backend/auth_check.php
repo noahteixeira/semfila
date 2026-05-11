@@ -20,7 +20,7 @@ if ($_SESSION["usuario_tipo"] == "gestor") {
 
     if (!$contrato || $contrato["status"] == "inativo" || $contrato["data_vencimento"] < date("Y-m-d")) {
         session_destroy();
-        header("Location: ../frontend/login.html?erro=1");
+        header("Location: ../frontend/login.html?contrato=1");
         exit();
     }
 }
