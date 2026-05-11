@@ -10,18 +10,24 @@
 </head>
 <body data-cargo="baladeiro" data-pagina="ingressos">
 
+    <div id="saldo-navbar" class="saldo-navbar">
+        <i class="fa-solid fa-wallet"></i>
+        <strong>Saldo:</strong> R$ <span id="saldo-topo">0.00</span>
+    </div>
+
     <main class="conteudo-principal">
         <div class="container">
             <h2>Meus Ingressos</h2>
             <p class="descricao">Veja aqui todos os ingressos que você já comprou.</p>
 
             <div id="lista-ingressos">
-                <!-- Ingressos comprados serão carregados aqui -->
+
             </div>
         </div>
     </main>
 
     <script src="js/sidebar.js"></script>
     <script src="js/meus_ingressos.js"></script>
+    <script src="js/saldo_navbar.js"></script>
 </body>
 </html>

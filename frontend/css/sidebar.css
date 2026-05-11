@@ -122,6 +122,49 @@ body.tem-sidebar .container-cadastro {
     width: auto;
 }
 
+.saldo-navbar {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 200;
+    background: rgba(9, 29, 70, 0.96);
+    color: #f5f7ff;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 10px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.22);
+    min-width: 180px;
+}
+
+.saldo-navbar i {
+    font-size: 16px;
+    color: #f7d154;
+}
+
+.saldo-navbar strong {
+    color: #ffffff;
+}
+
+.saldo-navbar span {
+    color: #f7d154;
+}
+
+@media (max-width: 900px) {
+    .saldo-navbar {
+        position: static;
+        margin: 15px auto 0;
+        right: auto;
+        left: auto;
+        width: calc(100% - 40px);
+        max-width: 320px;
+    }
+}
+
 /* ============================================
    CONTENT AREA - FULL WIDTH LAYOUT REDESIGN
    ============================================ */
