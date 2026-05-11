@@ -213,3 +213,18 @@ CREATE TABLE itens_consumo (
         ON UPDATE CASCADE
         ON DELETE CASCADE
 );
+
+--  tabela: transacoes_saldo
+CREATE TABLE transacoes_saldo (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    pulseira_id INT NOT NULL,
+    tipo ENUM('recarga', 'consumo') NOT NULL,
+    valor DECIMAL(10,2) NOT NULL,
+    descricao VARCHAR(255) DEFAULT NULL,
+    registrado_em TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_transacoes_pulseira
+        FOREIGN KEY (pulseira_id) REFERENCES pulseiras (id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);

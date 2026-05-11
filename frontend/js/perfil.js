@@ -5,6 +5,7 @@ fetch("../backend/perfil_baladeiro.php")
         document.getElementById("email").textContent = data.email;
         document.getElementById("cpf").textContent = data.cpf;
         document.getElementById("data_nascimento").textContent = data.data_nascimento;
+        document.getElementById("saldo").textContent = parseFloat(data.saldo || 0).toFixed(2);
         document.getElementById("criado_em").textContent = data.criado_em;
         if (data.foto_perfil) {
             document.getElementById("foto_perfil").src = data.foto_perfil;

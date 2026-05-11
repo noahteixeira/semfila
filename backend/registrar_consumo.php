@@ -53,6 +53,13 @@ mysqli_stmt_bind_param($stmt, "di", $valor_total, $pulseira["id"]);
 mysqli_stmt_execute($stmt);
 mysqli_stmt_close($stmt);
 
+// registrar transacao de consumo
+$sql_trans = "INSERT INTO transacoes_saldo (pulseira_id, tipo, valor, descricao) VALUES (?, 'consumo', ?, 'Consumo no bar')";
+$stmt_trans = mysqli_prepare($conexao, $sql_trans);
+mysqli_stmt_bind_param($stmt_trans, "id", $pulseira["id"], $valor_total);
+mysqli_stmt_execute($stmt_trans);
+mysqli_stmt_close($stmt_trans);
+
 // inserir consumo_bar
 $sql = "INSERT INTO consumos_bar (evento_id, pulseira_id, funcionario_id, valor_total) VALUES (?, ?, ?, ?)";
 $stmt = mysqli_prepare($conexao, $sql);

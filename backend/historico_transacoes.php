@@ -2,24 +2,29 @@
 include("auth_check.php");
 include("conexao.php");
 
-// verificar se é baladeiro
 if ($_SESSION["usuario_tipo"] != "baladeiro") {
     echo json_encode(["erro" => "Acesso negado"]);
     exit();
 }
 
-// buscar dados do usuario e saldo da pulseira
-$sql = "SELECT u.nome, u.email, u.cpf, u.data_nascimento, u.foto_perfil, u.documento_url, u.criado_em, p.saldo
-        FROM usuarios u
-        LEFT JOIN pulseiras p ON u.id = p.usuario_id
-        WHERE u.id = ?";
+$sql = "SELECT ts.tipo, ts.valor, ts.descricao, ts.registrado_em
+        FROM transacoes_saldo ts
+        INNER JOIN pulseiras p ON ts.pulseira_id = p.id
+        WHERE p.usuario_id = ?
+        ORDER BY ts.registrado_em DESC";
+
 $stmt = mysqli_prepare($conexao, $sql);
 mysqli_stmt_bind_param($stmt, "i", $_SESSION["usuario_id"]);
 mysqli_stmt_execute($stmt);
 $resultado = mysqli_stmt_get_result($stmt);
-$usuario = mysqli_fetch_assoc($resultado);
+
+$transacoes = [];
+while ($transacao = mysqli_fetch_assoc($resultado)) {
+    $transacoes[] = $transacao;
+}
+
 mysqli_stmt_close($stmt);
 mysqli_close($conexao);
 
-echo json_encode($usuario);
+echo json_encode($transacoes);
 ?>
