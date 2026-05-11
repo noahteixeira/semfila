@@ -54,6 +54,7 @@
             { separador: true },
             { nome: "Listar Gestores", icone: "fa-list", link: "listar_gestores.html", id: "gestores" },
             { nome: "Novo Gestor", icone: "fa-user-plus", link: "cadastrar_gestor.html", id: "cadastrar-gestor" },
+            { nome: "Nova Balada", icone: "fa-store", link: "cadastrar_balada.html", id: "cadastrar-balada" },
             { separador: true },
             { nome: "Sair", icone: "fa-right-from-bracket", link: "../backend/logout.php", id: "sair" }
         ]

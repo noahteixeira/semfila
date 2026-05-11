@@ -1,3 +1,16 @@
+v1.2.9 | 11/05/2026 - Login do gestor e cadastro de balada. - NOAH
+- Corrigido cadastrar_gestor.php para salvar usuário e contrato na mesma transação.
+- Criados backend/cadastrar_balada.php e backend/listar_gestores_para_balada.php.
+- Criadas frontend/cadastrar_balada.html e frontend/js/cadastrar_balada.js.
+- Adicionado botão "Nova Balada" no menu do administrador.
+
+v1.2.8 | 11/05/2026 - Histórico de transações e recarga de saldo. - LUCAS
+- Criada a tabela transacoes_saldo no banco de dados.
+- Criados backend/historico_transacoes.php e frontend/historico_transacoes.html.
+- Criados frontend/js/historico_transacoes.js e frontend/js/recarregar_saldo.js.
+- Criados frontend/recarregar_saldo.html e frontend/js/saldo_navbar.js.
+- Adicionados saldo na navbar, recarga de saldo e histórico de transações na área do baladeiro.
+
 v1.2.7 | 11/05/2026 - Corrigindo os bugs do git do schamne. - NOAH
 - Corrigindo os bugs do git do schamne.
 
