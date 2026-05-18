@@ -31,40 +31,8 @@ if (!$pulseira) {
 
 // adicionar saldo
 if ($acao == "adicionar_saldo") {
-    $valor = floatval($_POST["valor"]);
-
-    if ($valor <= 0) {
-        echo json_encode(["erro" => "Valor inválido"]);
-        exit();
-    }
-
-    if ($pulseira["status"] != "ativa") {
-        echo json_encode(["erro" => "Pulseira inativa"]);
-        exit();
-    }
-
-    $novo_saldo = $pulseira["saldo"] + $valor;
-
-    $sql_update = "UPDATE pulseiras SET saldo = ? WHERE id = ?";
-    $stmt_update = mysqli_prepare($conexao, $sql_update);
-    mysqli_stmt_bind_param($stmt_update, "di", $novo_saldo, $pulseira["id"]);
-
-    if (mysqli_stmt_execute($stmt_update)) {
-        // registrar transacao
-        $sql_trans = "INSERT INTO transacoes_saldo (pulseira_id, tipo, valor, descricao) VALUES (?, 'recarga', ?, 'Recarga de saldo')";
-        $stmt_trans = mysqli_prepare($conexao, $sql_trans);
-        mysqli_stmt_bind_param($stmt_trans, "id", $pulseira["id"], $valor);
-        mysqli_stmt_execute($stmt_trans);
-        mysqli_stmt_close($stmt_trans);
-
-        mysqli_stmt_close($stmt_update);
-        mysqli_close($conexao);
-        echo json_encode(["sucesso" => true, "novo_saldo" => $novo_saldo]);
-    } else {
-        mysqli_stmt_close($stmt_update);
-        mysqli_close($conexao);
-        echo json_encode(["erro" => "Erro ao adicionar saldo"]);
-    }
+    mysqli_close($conexao);
+    echo json_encode(["erro" => "Recarga direta desativada. Use o checkout Stripe."]);
     exit();
 }
 

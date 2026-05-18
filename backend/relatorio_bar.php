@@ -29,7 +29,7 @@ if (!mysqli_fetch_assoc($resultado_verificar)) {
 mysqli_stmt_close($stmt_verificar);
 
 // buscar consumos do evento
-$sql = "SELECT cb.id, cb.valor_total, cb.registrado_em, u.nome AS usuario_nome, f.nome AS funcionario_nome
+$sql = "SELECT cb.id, cb.valor_total, cb.registrado_em, u.nome AS usuario_nome, f.nome AS responsavel_nome
         FROM consumos_bar cb
         INNER JOIN pulseiras p ON cb.pulseira_id = p.id
         INNER JOIN usuarios u ON p.usuario_id = u.id
@@ -88,13 +88,35 @@ while ($produto = mysqli_fetch_assoc($resultado)) {
 }
 mysqli_stmt_close($stmt);
 
-// receita total do bar
-$sql_receita = "SELECT COALESCE(SUM(valor_total), 0) AS receita_total FROM consumos_bar WHERE evento_id = ?";
-$stmt = mysqli_prepare($conexao, $sql_receita);
+// resumo do bar
+$sql_resumo = "SELECT COUNT(*) AS total_consumos, COALESCE(SUM(valor_total), 0) AS receita_total, COALESCE(AVG(valor_total), 0) AS ticket_medio FROM consumos_bar WHERE evento_id = ?";
+$stmt = mysqli_prepare($conexao, $sql_resumo);
 mysqli_stmt_bind_param($stmt, "i", $evento_id);
 mysqli_stmt_execute($stmt);
 $resultado = mysqli_stmt_get_result($stmt);
-$receita = mysqli_fetch_assoc($resultado);
+$resumo = mysqli_fetch_assoc($resultado);
+$dias = [];
+mysqli_stmt_close($stmt);
+
+// dias com mais consumo
+$sql_dias = "SELECT DATE(registrado_em) AS data_consumo, COUNT(*) AS total_consumos, COALESCE(SUM(valor_total), 0) AS receita_total
+             FROM consumos_bar
+             WHERE evento_id = ?
+             GROUP BY DATE(registrado_em)
+             ORDER BY total_consumos DESC, data_consumo DESC";
+
+$stmt = mysqli_prepare($conexao, $sql_dias);
+mysqli_stmt_bind_param($stmt, "i", $evento_id);
+mysqli_stmt_execute($stmt);
+$resultado = mysqli_stmt_get_result($stmt);
+
+while ($dia = mysqli_fetch_assoc($resultado)) {
+    $dias[] = [
+        "data" => date("d/m/Y", strtotime($dia["data_consumo"])),
+        "quantidade" => (int)$dia["total_consumos"],
+        "receita" => floatval($dia["receita_total"])
+    ];
+}
 mysqli_stmt_close($stmt);
 
 mysqli_close($conexao);
@@ -102,6 +124,9 @@ mysqli_close($conexao);
 echo json_encode([
     "consumos" => $consumos,
     "produtos" => $produtos,
-    "receita_total" => floatval($receita["receita_total"])
+    "dias" => $dias,
+    "total_consumos" => (int)$resumo["total_consumos"],
+    "receita_total" => floatval($resumo["receita_total"]),
+    "ticket_medio" => floatval($resumo["ticket_medio"])
 ]);
 ?>

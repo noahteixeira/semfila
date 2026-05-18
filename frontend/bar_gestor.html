@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SemFila - Bar</title>
+    <title>SemFila - Registrar Consumo</title>
     <link rel="stylesheet" href="css/funcionario.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="css/sidebar.css">
 </head>
-<body data-cargo="funcionario" data-pagina="bar">
+<body data-cargo="gestor" data-pagina="bar-gestor">
 
     <main class="conteudo-principal">
         <div class="container">
-            <h2>Controle do Bar</h2>
-            <p class="descricao">Identifique a pulseira do cliente e registre os consumos.</p>
+            <h2>Registrar Consumo do Bar</h2>
+            <p class="descricao">Registre os consumos da sua balada de forma simples.</p>
 
             <div class="identificacao">
                 <label for="rfid">Código RFID da Pulseira:</label>
@@ -29,14 +29,11 @@
             <div id="consumo-form" style="display: none;">
                 <div class="evento-select">
                     <label for="evento-select">Evento:</label>
-                    <select id="evento-select">
-                        <!-- Eventos serão carregados aqui -->
-                    </select>
+                    <select id="evento-select"></select>
                 </div>
                 <h3>Adicionar Produtos</h3>
                 <select id="produto-select">
                     <option value="">Selecione um produto</option>
-                    <!-- Produtos serão carregados aqui -->
                 </select>
                 <input type="number" id="quantidade" placeholder="Quantidade" min="1" value="1">
                 <button id="adicionar-produto-btn">Adicionar</button>

@@ -17,6 +17,37 @@ var currentSaldo = 0;
 var itens = [];
 var total = 0;
 
+function carregarProdutos() {
+    fetch("../backend/listar_produtos_bar.php?t=" + new Date().getTime())
+        .then(function(response) { return response.json(); })
+        .then(function(data) {
+            produtoSelect.innerHTML = '<option value="">Selecione um produto</option>';
+
+            if (data.erro) {
+                alert(data.erro);
+                return;
+            }
+
+            if (data.length == 0) {
+                produtoSelect.innerHTML = '<option value="">Nenhum produto cadastrado</option>';
+                return;
+            }
+
+            data.forEach(function(produto) {
+                var option = document.createElement("option");
+                option.value = produto.id;
+                option.textContent = produto.nome + " - R$ " + parseFloat(produto.preco).toFixed(2);
+                option.setAttribute("data-nome", produto.nome);
+                option.setAttribute("data-preco", produto.preco);
+                produtoSelect.appendChild(option);
+            });
+        })
+        .catch(function(error) {
+            console.error("Erro:", error);
+            alert("Erro ao carregar produtos");
+        });
+}
+
 // carregar eventos
 fetch("../backend/listar_eventos_funcionario.php")
     .then(function(response) { return response.json(); })
@@ -63,6 +94,7 @@ buscarBtn.addEventListener("click", function() {
             clienteSaldo.textContent = data.saldo;
             clienteInfo.style.display = "block";
             consumoForm.style.display = "block";
+            carregarProdutos();
             itens = [];
             total = 0;
             atualizarItens();
@@ -83,9 +115,14 @@ adicionarBtn.addEventListener("click", function() {
         return;
     }
 
-    var partes = selected.split("|");
-    var nome = partes[0];
-    var preco = parseFloat(partes[1]);
+    var option = produtoSelect.options[produtoSelect.selectedIndex];
+    var nome = option.getAttribute("data-nome");
+    var preco = parseFloat(option.getAttribute("data-preco"));
+
+    if (!nome || isNaN(preco)) {
+        alert("Selecione um produto válido");
+        return;
+    }
 
     itens.push({
         nome: nome,

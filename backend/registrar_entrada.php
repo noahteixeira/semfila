@@ -26,9 +26,9 @@ if ($metodo != "qr_code" && $metodo != "rfid") {
 }
 
 // verificar se ingresso ainda esta disponivel
-$sql_check = "SELECT status FROM ingressos WHERE id = ?";
+$sql_check = "SELECT i.status FROM ingressos i INNER JOIN ingressos_lotes il ON i.lote_id = il.id WHERE i.id = ? AND il.evento_id = ?";
 $stmt_check = mysqli_prepare($conexao, $sql_check);
-mysqli_stmt_bind_param($stmt_check, "i", $ingresso_id);
+mysqli_stmt_bind_param($stmt_check, "ii", $ingresso_id, $evento_id);
 mysqli_stmt_execute($stmt_check);
 $resultado_check = mysqli_stmt_get_result($stmt_check);
 $ingresso = mysqli_fetch_assoc($resultado_check);

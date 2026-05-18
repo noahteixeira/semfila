@@ -4,18 +4,46 @@ var participanteInfo = document.getElementById("participante-info");
 var liberarBtn = document.getElementById("liberar-btn");
 var msgSucesso = document.getElementById("msg-sucesso");
 var msgErro = document.getElementById("msg-erro");
+var eventoSelect = document.getElementById("evento-select");
 
 var ingressoAtual = null;
 
+fetch("../backend/listar_eventos_funcionario.php")
+    .then(function(response) { return response.json(); })
+    .then(function(data) {
+        if (data.erro) {
+            mostrarErro(data.erro);
+            return;
+        }
+
+        eventoSelect.innerHTML = '<option value="">Selecione um evento</option>';
+        data.forEach(function(evento) {
+            var option = document.createElement("option");
+            option.value = evento.id;
+            option.textContent = evento.nome;
+            eventoSelect.appendChild(option);
+        });
+    })
+    .catch(function(error) {
+        console.error("Erro:", error);
+        mostrarErro("Erro ao carregar eventos");
+    });
+
 buscarBtn.addEventListener("click", function() {
     var qrCode = qrInput.value.trim();
+    var eventoId = eventoSelect.value;
     
     if (!qrCode) {
-        mostrarErro("Digite ou escaneie um código de ingresso");
+        mostrarErro("Digite ou escaneie um QR Code ou RFID");
         return;
     }
 
-    fetch("../backend/validar_entrada.php?codigo=" + encodeURIComponent(qrCode))
+    if (!eventoId) {
+        mostrarErro("Selecione um evento");
+        return;
+    }
+
+    fetch("../backend/validar_entrada.php?codigo=" + encodeURIComponent(qrCode) + "&evento_id=" + encodeURIComponent(eventoId))
         .then(function(response) { return response.json(); })
         .then(function(data) {
             if (data.erro) {

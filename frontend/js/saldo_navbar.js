@@ -1,38 +1,23 @@
-// Script para carregar saldo na navbar e inicializar dados
-function inicializarDados() {
-    // Se primeira vez, criar dados de teste
-    if (!localStorage.getItem("saldo")) {
-        localStorage.setItem("saldo", "0.00");
-        localStorage.setItem("historico_transacoes", JSON.stringify([
-            {
-                tipo: "recarga",
-                valor: 50.00,
-                descricao: "Recarga de saldo de teste",
-                registrado_em: new Date(Date.now() - 3600000).toISOString()
-            },
-            {
-                tipo: "consumo",
-                valor: 15.00,
-                descricao: "Consumo no bar",
-                registrado_em: new Date(Date.now() - 1800000).toISOString()
-            },
-            {
-                tipo: "recarga",
-                valor: 100.00,
-                descricao: "Recarga de saldo",
-                registrado_em: new Date().toISOString()
-            }
-        ]));
-    }
-}
-
 function carregarSaldoNavbar() {
-    var saldo = localStorage.getItem("saldo") || "0.00";
-    if (document.getElementById("saldo-topo")) {
-        document.getElementById("saldo-topo").textContent = parseFloat(saldo).toFixed(2);
-    }
+    var saldoEl = document.getElementById("saldo-topo");
+    if (!saldoEl) return;
+
+    fetch("../backend/perfil_baladeiro.php")
+        .then(function(response) { return response.json(); })
+        .then(function(data) {
+            var saldo = 0;
+            if (data && !data.erro && data.saldo !== null && data.saldo !== undefined) {
+                saldo = parseFloat(data.saldo);
+                if (isNaN(saldo)) {
+                    saldo = 0;
+                }
+            }
+            saldoEl.textContent = saldo.toFixed(2);
+        })
+        .catch(function(error) {
+            console.error("Erro ao carregar saldo da navbar:", error);
+            saldoEl.textContent = "0.00";
+        });
 }
 
-// Inicializar dados e carregar saldo ao iniciar
-inicializarDados();
 carregarSaldoNavbar();

@@ -7,14 +7,20 @@ if ($_SESSION["usuario_tipo"] != "funcionario") {
     exit();
 }
 
-if ($_SERVER["REQUEST_METHOD"] != "GET" || !isset($_GET["codigo"])) {
+if ($_SERVER["REQUEST_METHOD"] != "GET" || !isset($_GET["codigo"]) || !isset($_GET["evento_id"])) {
     echo json_encode(["erro" => "Dados inválidos"]);
     exit();
 }
 
 $codigo = trim($_GET["codigo"]);
+$evento_id = (int)$_GET["evento_id"];
 $metodo = "qr_code";
 $ingresso = null;
+
+if ($evento_id <= 0) {
+    echo json_encode(["erro" => "Evento inválido"]);
+    exit();
+}
 
 // primeiro tenta buscar como QR code
 $sql = "SELECT i.id, i.status, i.comprado_em, il.preco, e.id AS evento_id, e.idade_minima, e.nome AS evento_nome, 
@@ -23,10 +29,10 @@ $sql = "SELECT i.id, i.status, i.comprado_em, il.preco, e.id AS evento_id, e.ida
         INNER JOIN ingressos_lotes il ON i.lote_id = il.id
         INNER JOIN eventos e ON il.evento_id = e.id
         INNER JOIN usuarios u ON i.usuario_id = u.id
-        WHERE i.qr_code = ?";
+        WHERE i.qr_code = ? AND il.evento_id = ?";
 
 $stmt = mysqli_prepare($conexao, $sql);
-mysqli_stmt_bind_param($stmt, "s", $codigo);
+mysqli_stmt_bind_param($stmt, "si", $codigo, $evento_id);
 mysqli_stmt_execute($stmt);
 $resultado = mysqli_stmt_get_result($stmt);
 $ingresso = mysqli_fetch_assoc($resultado);
@@ -40,15 +46,15 @@ if (!$ingresso) {
                         u.id AS usuario_id, u.nome, u.data_nascimento, u.foto_perfil
                  FROM pulseiras p
                  INNER JOIN usuarios u ON p.usuario_id = u.id
-                 INNER JOIN ingressos i ON i.usuario_id = u.id
+                 INNER JOIN ingressos i ON i.pulseira_id = p.id
                  INNER JOIN ingressos_lotes il ON i.lote_id = il.id
                  INNER JOIN eventos e ON il.evento_id = e.id
-                 WHERE p.codigo_rfid = ? AND i.status = 'disponivel'
+                 WHERE p.codigo_rfid = ? AND p.status = 'ativa' AND il.evento_id = ? AND i.status = 'disponivel'
                  ORDER BY i.comprado_em DESC
                  LIMIT 1";
 
     $stmt_rfid = mysqli_prepare($conexao, $sql_rfid);
-    mysqli_stmt_bind_param($stmt_rfid, "s", $codigo);
+    mysqli_stmt_bind_param($stmt_rfid, "si", $codigo, $evento_id);
     mysqli_stmt_execute($stmt_rfid);
     $resultado_rfid = mysqli_stmt_get_result($stmt_rfid);
     $ingresso = mysqli_fetch_assoc($resultado_rfid);

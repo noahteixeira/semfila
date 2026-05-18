@@ -1,4 +1,5 @@
 var historicoLista = document.getElementById("historico-lista");
+var resumoConsumo = document.getElementById("resumo-consumo");
 
 fetch("../backend/historico_consumo.php")
     .then(function(response) { return response.json(); })
@@ -9,9 +10,18 @@ fetch("../backend/historico_consumo.php")
         }
 
         if (data.length == 0) {
+            resumoConsumo.innerHTML = "";
             historicoLista.innerHTML = "<p>Nenhum consumo registrado.</p>";
             return;
         }
+
+        var totalGasto = 0;
+        data.forEach(function(consumo) {
+            totalGasto += parseFloat(consumo.valor_total);
+        });
+
+        resumoConsumo.innerHTML = "<p><strong>Total de consumos:</strong> " + data.length + "</p>" +
+            "<p><strong>Total gasto:</strong> R$ " + totalGasto.toFixed(2) + "</p>";
 
         var ul = document.createElement("ul");
         data.forEach(function(consumo) {

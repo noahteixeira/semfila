@@ -40,10 +40,10 @@ carregarBtn.addEventListener("click", function() {
                 return;
             }
 
-            relatorioDiv.innerHTML = "<h3>Relatório do Bar</h3>";
-
-            // Receita total
-            relatorioDiv.innerHTML += "<p><strong>Receita total do bar: R$ " + Number(data.receita_total).toFixed(2) + "</strong></p>";
+            relatorioDiv.innerHTML = "<h3>Dashboard de Consumo</h3>";
+            relatorioDiv.innerHTML += "<p><strong>Total de consumos:</strong> " + data.total_consumos + "</p>";
+            relatorioDiv.innerHTML += "<p><strong>Receita total do bar:</strong> R$ " + Number(data.receita_total).toFixed(2) + "</p>";
+            relatorioDiv.innerHTML += "<p><strong>Ticket médio:</strong> R$ " + Number(data.ticket_medio).toFixed(2) + "</p>";
 
             // Produtos mais vendidos
             if (data.produtos.length > 0) {
@@ -56,16 +56,26 @@ carregarBtn.addEventListener("click", function() {
                 relatorioDiv.innerHTML += htmlProdutos;
             }
 
+            if (data.dias.length > 0) {
+                var htmlDias = "<h4>Dias Mais Utilizados</h4>";
+                htmlDias += "<table><thead><tr><th>Dia</th><th>Consumos</th><th>Receita</th></tr></thead><tbody>";
+                data.dias.forEach(function(dia) {
+                    htmlDias += "<tr><td>" + dia.data + "</td><td>" + dia.quantidade + "</td><td>R$ " + Number(dia.receita).toFixed(2) + "</td></tr>";
+                });
+                htmlDias += "</tbody></table>";
+                relatorioDiv.innerHTML += htmlDias;
+            }
+
             // Consumos individuais
             if (data.consumos.length > 0) {
                 var htmlConsumos = "<h4>Consumos Registrados</h4>";
-                htmlConsumos += "<table><thead><tr><th>Data/Hora</th><th>Cliente</th><th>Funcionário</th><th>Itens</th><th>Total</th></tr></thead><tbody>";
+                htmlConsumos += "<table><thead><tr><th>Data/Hora</th><th>Cliente</th><th>Responsável</th><th>Itens</th><th>Total</th></tr></thead><tbody>";
                 data.consumos.forEach(function(consumo) {
                     var dataFormatada = new Date(consumo.registrado_em).toLocaleString("pt-BR");
                     htmlConsumos += "<tr>" +
                         "<td>" + dataFormatada + "</td>" +
                         "<td>" + consumo.usuario_nome + "</td>" +
-                        "<td>" + consumo.funcionario_nome + "</td>" +
+                        "<td>" + consumo.responsavel_nome + "</td>" +
                         "<td>" + (consumo.itens || "N/A") + "</td>" +
                         "<td>R$ " + parseFloat(consumo.valor_total).toFixed(2) + "</td>" +
                         "</tr>";
