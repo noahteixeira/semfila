@@ -11,10 +11,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $lote_id = (int)$_POST["lote_id"];
     $quantidade = (int)$_POST["quantidade"];
     $evento_id = (int)$_POST["evento_id"];
+    $pagamento_status = isset($_POST["pagamento_status"]) ? trim($_POST["pagamento_status"]) : "";
 
     if ($quantidade <= 0) {
         echo json_encode(["erro" => "Quantidade inválida"]);
         exit();
+    }
+
+    if ($pagamento_status != "aprovado") {
+        echo json_encode(["erro" => "Pagamento não aprovado"]);
+        exit();
+    }
+
+    $pulseira_id = 0;
+    $sql_pulseira = "SELECT id FROM pulseiras WHERE usuario_id = ? AND status = 'ativa'";
+    $stmt_pulseira = mysqli_prepare($conexao, $sql_pulseira);
+    mysqli_stmt_bind_param($stmt_pulseira, "i", $_SESSION["usuario_id"]);
+    mysqli_stmt_execute($stmt_pulseira);
+    $resultado_pulseira = mysqli_stmt_get_result($stmt_pulseira);
+    $pulseira = mysqli_fetch_assoc($resultado_pulseira);
+    mysqli_stmt_close($stmt_pulseira);
+
+    if ($pulseira) {
+        $pulseira_id = (int)$pulseira["id"];
     }
 
     // verificar disponibilidade
@@ -41,9 +60,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // criar ingressos com QR codes
     for ($i = 0; $i < $quantidade; $i++) {
         $qr_code = uniqid("QR_");
-        $sql_ingresso = "INSERT INTO ingressos (lote_id, usuario_id, qr_code, status) VALUES (?, ?, ?, 'disponivel')";
-        $stmt_ingresso = mysqli_prepare($conexao, $sql_ingresso);
-        mysqli_stmt_bind_param($stmt_ingresso, "iis", $lote_id, $_SESSION["usuario_id"], $qr_code);
+        if ($pulseira_id > 0) {
+            $sql_ingresso = "INSERT INTO ingressos (lote_id, usuario_id, qr_code, pulseira_id, status) VALUES (?, ?, ?, ?, 'disponivel')";
+            $stmt_ingresso = mysqli_prepare($conexao, $sql_ingresso);
+            mysqli_stmt_bind_param($stmt_ingresso, "iisi", $lote_id, $_SESSION["usuario_id"], $qr_code, $pulseira_id);
+        } else {
+            $sql_ingresso = "INSERT INTO ingressos (lote_id, usuario_id, qr_code, status) VALUES (?, ?, ?, 'disponivel')";
+            $stmt_ingresso = mysqli_prepare($conexao, $sql_ingresso);
+            mysqli_stmt_bind_param($stmt_ingresso, "iis", $lote_id, $_SESSION["usuario_id"], $qr_code);
+        }
         mysqli_stmt_execute($stmt_ingresso);
         mysqli_stmt_close($stmt_ingresso);
     }

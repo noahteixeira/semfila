@@ -191,11 +191,3 @@ function atualizarItens() {
     });
     totalSpan.textContent = total.toFixed(2);
 }
-
-window.addEventListener("focus", function() {
-    if (consumoForm.style.display == "block") {
-        carregarProdutos();
-    }
-});
-
-carregarProdutos();

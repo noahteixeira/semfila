@@ -77,29 +77,12 @@ function finalizarCompra() {
         return;
     }
 
-    // preparar dados para enviar ao backend
-    var formData = new FormData();
-    formData.append("carrinho_json", JSON.stringify(carrinho));
+    localStorage.setItem("pagamento_ingresso_pendente", JSON.stringify({
+        tipo: "carrinho",
+        carrinho: carrinho
+    }));
 
-    fetch("../backend/finalizar_compra.php", {
-        method: "POST",
-        body: formData
-    })
-        .then(function(response) { return response.json(); })
-        .then(function(data) {
-            if (data.sucesso) {
-                alert("✓ Compra finalizada com sucesso!\n\nSeus ingressos foram gerados e podem ser visualizados no perfil.");
-                localStorage.removeItem("carrinho");
-                atualizarIndicadorCarrinho();
-                window.location.href = "ver_eventos.html";
-            } else {
-                alert("Erro: " + (data.erro || "Erro ao finalizar compra"));
-            }
-        })
-        .catch(function(error) {
-            console.error("Erro:", error);
-            alert("Erro ao processar compra");
-        });
+    window.location.href = "pagamento_ingresso.html";
 }
 
 // Carregar ao abrir página

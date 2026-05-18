@@ -40,7 +40,15 @@ $stmt = mysqli_prepare($conexao, $sql);
 mysqli_stmt_bind_param($stmt, "isss", $usuario_id, $codigo_rfid, $assinatura_inicio, $assinatura_fim);
 
 if (mysqli_stmt_execute($stmt)) {
+    $pulseira_id = mysqli_insert_id($conexao);
     mysqli_stmt_close($stmt);
+
+    $sql_vincular = "UPDATE ingressos SET pulseira_id = ? WHERE usuario_id = ? AND status = 'disponivel' AND pulseira_id IS NULL";
+    $stmt_vincular = mysqli_prepare($conexao, $sql_vincular);
+    mysqli_stmt_bind_param($stmt_vincular, "ii", $pulseira_id, $usuario_id);
+    mysqli_stmt_execute($stmt_vincular);
+    mysqli_stmt_close($stmt_vincular);
+
     mysqli_close($conexao);
     echo json_encode(["sucesso" => true, "codigo_rfid" => $codigo_rfid, "assinatura_fim" => $assinatura_fim]);
 } else {

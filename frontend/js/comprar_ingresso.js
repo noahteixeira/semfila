@@ -87,35 +87,12 @@ function comprarIngresso(loteId, eventoId) {
         return;
     }
 
-    var formData = new FormData();
-    formData.append("lote_id", loteId);
-    formData.append("evento_id", eventoId);
-    formData.append("quantidade", quantidade);
+    localStorage.setItem("pagamento_ingresso_pendente", JSON.stringify({
+        tipo: "agora",
+        lote_id: loteId,
+        evento_id: eventoId,
+        quantidade: quantidade
+    }));
 
-    fetch("../backend/comprar_ingresso.php", {
-        method: "POST",
-        body: formData
-    })
-        .then(function (response) { return response.json(); })
-        .then(function (data) {
-            if (data.sucesso) {
-                document.getElementById("msg-sucesso").textContent = data.mensagem;
-                document.getElementById("msg-sucesso").style.display = "block";
-                document.getElementById("msg-erro").style.display = "none";
-                
-                // recarregar lotes após compra
-                setTimeout(function() {
-                    carregarLotes(eventoId);
-                }, 2000);
-            } else {
-                document.getElementById("msg-erro").textContent = data.erro || "Erro ao comprar ingresso";
-                document.getElementById("msg-erro").style.display = "block";
-                document.getElementById("msg-sucesso").style.display = "none";
-            }
-        })
-        .catch(function (error) {
-            console.error("Erro:", error);
-            document.getElementById("msg-erro").textContent = "Erro ao processar compra";
-            document.getElementById("msg-erro").style.display = "block";
-        });
+    window.location.href = "pagamento_ingresso.html";
 }
