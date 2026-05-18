@@ -44,6 +44,28 @@ body.tem-sidebar .container-cadastro {
     width: 90px;
 }
 
+.sidebar .sidebar-balada {
+    padding: 14px 20px 16px;
+    border-bottom: 1px solid #2a2a4a;
+}
+
+.sidebar .sidebar-balada-label {
+    font-size: 11px;
+    color: #555570;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: Arial, sans-serif;
+    margin-bottom: 6px;
+}
+
+.sidebar .sidebar-balada-nome {
+    color: #f5f7ff;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+    line-height: 1.4;
+    word-break: break-word;
+}
+
 .sidebar nav {
     padding: 10px 0;
 }

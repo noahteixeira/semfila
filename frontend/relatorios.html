@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SemFila - Relatórios do Gestor</title>
+    <title>SemFila - Relatórios</title>
     <link rel="stylesheet" href="css/gestor.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="css/sidebar.css">
@@ -12,11 +12,24 @@
 
     <main class="conteudo-principal">
         <div class="container">
-            <h2>Relatórios do Gestor</h2>
-            <p class="descricao">Acesse os relatórios pelo menu ao lado.</p>
+            <h2>Relatórios</h2>
+            <p class="descricao">Resumo simples de entradas, ingressos e consumo do bar por evento.</p>
+
+            <div class="filtro">
+                <label for="evento-select">Selecione o Evento:</label>
+                <select id="evento-select">
+                    <option value="">Selecione um evento</option>
+                </select>
+                <button id="carregar-btn">Carregar Relatório</button>
+            </div>
+
+            <div id="relatorio">
+                <p class="descricao">Selecione um evento para ver o resumo geral.</p>
+            </div>
         </div>
     </main>
 
     <script src="js/sidebar.js"></script>
+    <script src="js/relatorio_geral.js"></script>
 </body>
 </html>

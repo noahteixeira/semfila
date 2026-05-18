@@ -31,9 +31,12 @@ fetch("../backend/listar_funcionarios.php")
             var dataFormatada = dataParts[2] + "/" + dataParts[1] + "/" + dataParts[0];
 
             // acoes
-            var acoes = '<a href="editar_funcionario.html?id=' + f.id + '" class="btn-acao btn-editar">Editar</a>';
+            var acoes = '';
             if (f.ativo == 1) {
+                acoes += '<a href="editar_funcionario.html?id=' + f.id + '" class="btn-acao btn-editar">Editar</a>';
                 acoes += ' <a href="#" class="btn-acao btn-desativar" onclick="return confirmarDesativar(' + f.id + ')">Desativar</a>';
+            } else {
+                acoes = '-';
             }
 
             tr.innerHTML = '<td>' + f.nome + '</td>' +

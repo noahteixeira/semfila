@@ -15,11 +15,10 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
 $rfid = $_POST["rfid"];
 $evento_id = (int)$_POST["evento_id"];
 $produtos_json = $_POST["produtos_json"];
-$valor_total = (float)$_POST["valor_total"];
 
 $produtos = json_decode($produtos_json, true);
 
-if (empty($rfid) || $evento_id <= 0 || empty($produtos) || $valor_total <= 0) {
+if (empty($rfid) || $evento_id <= 0 || empty($produtos)) {
     echo json_encode(["erro" => "Dados incompletos"]);
     exit();
 }
@@ -33,6 +32,11 @@ if ($_SESSION["usuario_tipo"] == "funcionario") {
     $usuario = mysqli_fetch_assoc($resultado_balada);
     mysqli_stmt_close($stmt_balada);
 
+    if (!$usuario || !$usuario["balada_id"]) {
+        echo json_encode(["erro" => "Funcionário não associado a uma balada"]);
+        exit();
+    }
+
     $balada_id = (int)$usuario["balada_id"];
 } else {
     $sql_balada = "SELECT id FROM baladas WHERE gestor_id = ? AND ativo = 1";
@@ -43,6 +47,11 @@ if ($_SESSION["usuario_tipo"] == "funcionario") {
     $balada = mysqli_fetch_assoc($resultado_balada);
     mysqli_stmt_close($stmt_balada);
 
+    if (!$balada) {
+        echo json_encode(["erro" => "Gestor sem balada cadastrada"]);
+        exit();
+    }
+
     $balada_id = (int)$balada["id"];
 }
 
@@ -51,7 +60,7 @@ if ($balada_id <= 0) {
     exit();
 }
 
-$sql_evento = "SELECT id FROM eventos WHERE id = ? AND balada_id = ?";
+$sql_evento = "SELECT id FROM eventos WHERE id = ? AND balada_id = ? AND status = 'ativo'";
 $stmt_evento = mysqli_prepare($conexao, $sql_evento);
 mysqli_stmt_bind_param($stmt_evento, "ii", $evento_id, $balada_id);
 mysqli_stmt_execute($stmt_evento);
@@ -60,7 +69,46 @@ $evento = mysqli_fetch_assoc($resultado_evento);
 mysqli_stmt_close($stmt_evento);
 
 if (!$evento) {
-    echo json_encode(["erro" => "Evento inválido para esta balada"]);
+    echo json_encode(["erro" => "Evento inválido ou não ativo para esta balada"]);
+    exit();
+}
+
+$itens_calculados = [];
+$valor_total = 0;
+
+foreach ($produtos as $produto) {
+    $produto_id = isset($produto["id"]) ? (int)$produto["id"] : 0;
+    $quantidade = isset($produto["quantidade"]) ? (int)$produto["quantidade"] : 0;
+
+    if ($produto_id <= 0 || $quantidade <= 0) {
+        echo json_encode(["erro" => "Produto inválido"]);
+        exit();
+    }
+
+    $sql_produto = "SELECT nome, preco FROM produtos_bar WHERE id = ? AND balada_id = ?";
+    $stmt_produto = mysqli_prepare($conexao, $sql_produto);
+    mysqli_stmt_bind_param($stmt_produto, "ii", $produto_id, $balada_id);
+    mysqli_stmt_execute($stmt_produto);
+    $resultado_produto = mysqli_stmt_get_result($stmt_produto);
+    $produto_banco = mysqli_fetch_assoc($resultado_produto);
+    mysqli_stmt_close($stmt_produto);
+
+    if (!$produto_banco) {
+        echo json_encode(["erro" => "Produto não encontrado no cardápio"]);
+        exit();
+    }
+
+    $preco = (float)$produto_banco["preco"];
+    $valor_total = $valor_total + ($preco * $quantidade);
+    $itens_calculados[] = [
+        "nome" => $produto_banco["nome"],
+        "quantidade" => $quantidade,
+        "valor_unitario" => $preco
+    ];
+}
+
+if ($valor_total <= 0) {
+    echo json_encode(["erro" => "Valor inválido"]);
     exit();
 }
 
@@ -87,33 +135,53 @@ if ($pulseira["saldo"] < $valor_total) {
 mysqli_begin_transaction($conexao);
 
 // debitar saldo da pulseira
-$sql = "UPDATE pulseiras SET saldo = saldo - ? WHERE id = ?";
+$sql = "UPDATE pulseiras SET saldo = saldo - ? WHERE id = ? AND saldo >= ?";
 $stmt = mysqli_prepare($conexao, $sql);
-mysqli_stmt_bind_param($stmt, "di", $valor_total, $pulseira["id"]);
-mysqli_stmt_execute($stmt);
+mysqli_stmt_bind_param($stmt, "did", $valor_total, $pulseira["id"], $valor_total);
+if (!mysqli_stmt_execute($stmt) || mysqli_affected_rows($conexao) == 0) {
+    mysqli_rollback($conexao);
+    mysqli_stmt_close($stmt);
+    echo json_encode(["erro" => "Saldo insuficiente"]);
+    exit();
+}
 mysqli_stmt_close($stmt);
 
 // registrar transacao de consumo
 $sql_trans = "INSERT INTO transacoes_saldo (pulseira_id, tipo, valor, descricao) VALUES (?, 'consumo', ?, 'Consumo no bar')";
 $stmt_trans = mysqli_prepare($conexao, $sql_trans);
 mysqli_stmt_bind_param($stmt_trans, "id", $pulseira["id"], $valor_total);
-mysqli_stmt_execute($stmt_trans);
+if (!mysqli_stmt_execute($stmt_trans)) {
+    mysqli_rollback($conexao);
+    mysqli_stmt_close($stmt_trans);
+    echo json_encode(["erro" => "Erro ao registrar transação"]);
+    exit();
+}
 mysqli_stmt_close($stmt_trans);
 
 // inserir consumo_bar
 $sql = "INSERT INTO consumos_bar (evento_id, pulseira_id, funcionario_id, valor_total) VALUES (?, ?, ?, ?)";
 $stmt = mysqli_prepare($conexao, $sql);
 mysqli_stmt_bind_param($stmt, "iiid", $evento_id, $pulseira["id"], $_SESSION["usuario_id"], $valor_total);
-mysqli_stmt_execute($stmt);
+if (!mysqli_stmt_execute($stmt)) {
+    mysqli_rollback($conexao);
+    mysqli_stmt_close($stmt);
+    echo json_encode(["erro" => "Erro ao registrar consumo"]);
+    exit();
+}
 $consumo_id = mysqli_insert_id($conexao);
 mysqli_stmt_close($stmt);
 
 // inserir itens do consumo
-foreach ($produtos as $produto) {
+foreach ($itens_calculados as $produto) {
     $sql = "INSERT INTO itens_consumo (consumo_id, produto, quantidade, valor_unitario) VALUES (?, ?, ?, ?)";
     $stmt = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($stmt, "isid", $consumo_id, $produto["nome"], $produto["quantidade"], $produto["valor_unitario"]);
-    mysqli_stmt_execute($stmt);
+    if (!mysqli_stmt_execute($stmt)) {
+        mysqli_rollback($conexao);
+        mysqli_stmt_close($stmt);
+        echo json_encode(["erro" => "Erro ao registrar item do consumo"]);
+        exit();
+    }
     mysqli_stmt_close($stmt);
 }
 

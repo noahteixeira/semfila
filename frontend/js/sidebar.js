@@ -1,13 +1,12 @@
 (function() {
     var cargo = document.body.getAttribute("data-cargo");
     var pagina = document.body.getAttribute("data-pagina");
+    var mostrarBalada = cargo === "gestor" || cargo === "funcionario";
 
     if (!cargo) return;
 
     var menus = {
         baladeiro: [
-            { nome: "Início", icone: "fa-house", link: "area_baladeiro.html", id: "inicio" },
-            { separador: true },
             { nome: "Ver Eventos", icone: "fa-calendar", link: "ver_eventos.html", id: "eventos" },
             { nome: "Meus Ingressos", icone: "fa-ticket", link: "meus_ingressos.html", id: "ingressos" },
             { nome: "Minha Pulseira", icone: "fa-id-badge", link: "pulseira.html", id: "pulseira" },
@@ -21,8 +20,6 @@
             { nome: "Sair", icone: "fa-right-from-bracket", link: "../backend/logout.php", id: "sair" }
         ],
         gestor: [
-            { nome: "Início", icone: "fa-house", link: "area_gestor.html", id: "inicio" },
-            { separador: true },
             { titulo: "Eventos" },
             { nome: "Meus Eventos", icone: "fa-calendar", link: "listar_eventos.html", id: "eventos" },
             { nome: "Criar Evento", icone: "fa-circle-plus", link: "criar_evento.html", id: "criar-evento" },
@@ -36,17 +33,13 @@
             { nome: "Cardápio do Bar", icone: "fa-beer-mug-empty", link: "produtos_bar.html", id: "produtos-bar" },
             { separador: true },
             { titulo: "Relatórios" },
-            { nome: "Visão Geral", icone: "fa-chart-pie", link: "relatorios.html", id: "relatorios" },
+            { nome: "Relatórios", icone: "fa-chart-pie", link: "relatorios.html", id: "relatorios" },
             { nome: "Entradas", icone: "fa-door-open", link: "relatorio_entradas.html", id: "rel-entradas" },
             { nome: "Ingressos", icone: "fa-ticket", link: "relatorio_ingressos.html", id: "rel-ingressos" },
-            { nome: "Dashboard do Bar", icone: "fa-martini-glass", link: "relatorio_bar.html", id: "rel-bar" },
-            { nome: "Resumo", icone: "fa-file-lines", link: "relatorio_geral.html", id: "rel-geral" },
             { separador: true },
             { nome: "Sair", icone: "fa-right-from-bracket", link: "../backend/logout.php", id: "sair" }
         ],
         funcionario: [
-            { nome: "Início", icone: "fa-house", link: "area_funcionario.html", id: "inicio" },
-            { separador: true },
             { nome: "Validar Entrada", icone: "fa-qrcode", link: "validar_entrada.html", id: "validar" },
             { nome: "Controle do Bar", icone: "fa-beer-mug-empty", link: "bar.html", id: "bar" },
             { nome: "Controle de Fila", icone: "fa-people-line", link: "controle_fila.html", id: "fila" },
@@ -54,8 +47,6 @@
             { nome: "Sair", icone: "fa-right-from-bracket", link: "../backend/logout.php", id: "sair" }
         ],
         admin: [
-            { nome: "Início", icone: "fa-house", link: "area_admin.html", id: "inicio" },
-            { separador: true },
             { nome: "Listar Gestores", icone: "fa-list", link: "listar_gestores.html", id: "gestores" },
             { nome: "Novo Gestor", icone: "fa-user-plus", link: "cadastrar_gestor.html", id: "cadastrar-gestor" },
             { nome: "Nova Balada", icone: "fa-store", link: "cadastrar_balada.html", id: "cadastrar-balada" },
@@ -72,6 +63,14 @@
     var html = '<div class="logo-area">';
     html += '<img src="assets/logo.png" alt="SemFila">';
     html += '</div>';
+
+    if (mostrarBalada) {
+        html += '<div class="sidebar-balada" id="sidebar-balada">';
+        html += '<div class="sidebar-balada-label">Balada</div>';
+        html += '<div class="sidebar-balada-nome" id="sidebar-balada-nome">Carregando...</div>';
+        html += '</div>';
+    }
+
     html += '<nav>';
 
     for (var i = 0; i < itens.length; i++) {
@@ -110,4 +109,27 @@
 
     document.body.insertBefore(sidebar, document.body.firstChild);
     document.body.insertBefore(toggle, document.body.firstChild);
+
+    if (mostrarBalada) {
+        fetch("../backend/obter_balada_sidebar.php")
+            .then(function(response) { return response.json(); })
+            .then(function(data) {
+                var baladaNome = document.getElementById("sidebar-balada-nome");
+                if (!baladaNome) {
+                    return;
+                }
+
+                if (data && data.balada) {
+                    baladaNome.textContent = data.balada;
+                } else {
+                    baladaNome.textContent = "Nao vinculada";
+                }
+            })
+            .catch(function() {
+                var baladaNome = document.getElementById("sidebar-balada-nome");
+                if (baladaNome) {
+                    baladaNome.textContent = "Nao vinculada";
+                }
+            });
+    }
 })();
