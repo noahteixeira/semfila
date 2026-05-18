@@ -1,6 +1,7 @@
 (function() {
     var cargo = document.body.getAttribute("data-cargo");
     var pagina = document.body.getAttribute("data-pagina");
+    var mostrarBalada = cargo === "gestor" || cargo === "funcionario";
 
     if (!cargo) return;
 
@@ -62,6 +63,14 @@
     var html = '<div class="logo-area">';
     html += '<img src="assets/logo.png" alt="SemFila">';
     html += '</div>';
+
+    if (mostrarBalada) {
+        html += '<div class="sidebar-balada" id="sidebar-balada">';
+        html += '<div class="sidebar-balada-label">Balada</div>';
+        html += '<div class="sidebar-balada-nome" id="sidebar-balada-nome">Carregando...</div>';
+        html += '</div>';
+    }
+
     html += '<nav>';
 
     for (var i = 0; i < itens.length; i++) {
@@ -100,4 +109,27 @@
 
     document.body.insertBefore(sidebar, document.body.firstChild);
     document.body.insertBefore(toggle, document.body.firstChild);
+
+    if (mostrarBalada) {
+        fetch("../backend/obter_balada_sidebar.php")
+            .then(function(response) { return response.json(); })
+            .then(function(data) {
+                var baladaNome = document.getElementById("sidebar-balada-nome");
+                if (!baladaNome) {
+                    return;
+                }
+
+                if (data && data.balada) {
+                    baladaNome.textContent = data.balada;
+                } else {
+                    baladaNome.textContent = "Nao vinculada";
+                }
+            })
+            .catch(function() {
+                var baladaNome = document.getElementById("sidebar-balada-nome");
+                if (baladaNome) {
+                    baladaNome.textContent = "Nao vinculada";
+                }
+            });
+    }
 })();
