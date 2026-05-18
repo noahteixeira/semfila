@@ -2,7 +2,7 @@
 include("auth_check.php");
 include("conexao.php");
 
-if ($_SESSION["usuario_tipo"] != "funcionario") {
+if ($_SESSION["usuario_tipo"] != "funcionario" && $_SESSION["usuario_tipo"] != "gestor") {
     echo json_encode(["erro" => "Acesso negado"]);
     exit();
 }
@@ -21,6 +21,46 @@ $produtos = json_decode($produtos_json, true);
 
 if (empty($rfid) || $evento_id <= 0 || empty($produtos) || $valor_total <= 0) {
     echo json_encode(["erro" => "Dados incompletos"]);
+    exit();
+}
+
+if ($_SESSION["usuario_tipo"] == "funcionario") {
+    $sql_balada = "SELECT balada_id FROM usuarios WHERE id = ?";
+    $stmt_balada = mysqli_prepare($conexao, $sql_balada);
+    mysqli_stmt_bind_param($stmt_balada, "i", $_SESSION["usuario_id"]);
+    mysqli_stmt_execute($stmt_balada);
+    $resultado_balada = mysqli_stmt_get_result($stmt_balada);
+    $usuario = mysqli_fetch_assoc($resultado_balada);
+    mysqli_stmt_close($stmt_balada);
+
+    $balada_id = (int)$usuario["balada_id"];
+} else {
+    $sql_balada = "SELECT id FROM baladas WHERE gestor_id = ? AND ativo = 1";
+    $stmt_balada = mysqli_prepare($conexao, $sql_balada);
+    mysqli_stmt_bind_param($stmt_balada, "i", $_SESSION["usuario_id"]);
+    mysqli_stmt_execute($stmt_balada);
+    $resultado_balada = mysqli_stmt_get_result($stmt_balada);
+    $balada = mysqli_fetch_assoc($resultado_balada);
+    mysqli_stmt_close($stmt_balada);
+
+    $balada_id = (int)$balada["id"];
+}
+
+if ($balada_id <= 0) {
+    echo json_encode(["erro" => "Balada não encontrada"]);
+    exit();
+}
+
+$sql_evento = "SELECT id FROM eventos WHERE id = ? AND balada_id = ?";
+$stmt_evento = mysqli_prepare($conexao, $sql_evento);
+mysqli_stmt_bind_param($stmt_evento, "ii", $evento_id, $balada_id);
+mysqli_stmt_execute($stmt_evento);
+$resultado_evento = mysqli_stmt_get_result($stmt_evento);
+$evento = mysqli_fetch_assoc($resultado_evento);
+mysqli_stmt_close($stmt_evento);
+
+if (!$evento) {
+    echo json_encode(["erro" => "Evento inválido para esta balada"]);
     exit();
 }
 

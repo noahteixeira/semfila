@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SemFila - Cardápio do Bar</title>
+    <link rel="stylesheet" href="css/gestor.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+</head>
+<body data-cargo="gestor" data-pagina="produtos-bar">
+
+    <main class="conteudo-principal">
+        <div class="container">
+            <h2>Cardápio do Bar</h2>
+            <p class="descricao">Cadastre e remova os itens do cardápio da sua balada.</p>
+
+            <div id="msg-erro" class="msg-erro" style="display: none;"></div>
+            <div id="msg-sucesso" class="msg-sucesso" style="display: none;"></div>
+
+            <form id="form-produto">
+                <label for="nome">Nome do Produto:</label>
+                <input type="text" id="nome" name="nome" placeholder="Ex: Cerveja" required>
+
+                <label for="preco">Preço (R$):</label>
+                <input type="number" id="preco" name="preco" min="0.01" step="0.01" placeholder="Ex: 8.50" required>
+
+                <button type="submit">Cadastrar Produto</button>
+            </form>
+
+            <div id="tabela-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Produto</th>
+                            <th>Preço</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="lista-produtos"></tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/sidebar.js"></script>
+    <script src="js/produtos_bar.js"></script>
+</body>
+</html>

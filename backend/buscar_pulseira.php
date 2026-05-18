@@ -2,7 +2,7 @@
 include("auth_check.php");
 include("conexao.php");
 
-if ($_SESSION["usuario_tipo"] != "funcionario") {
+if ($_SESSION["usuario_tipo"] != "funcionario" && $_SESSION["usuario_tipo"] != "gestor") {
     echo json_encode(["erro" => "Acesso negado"]);
     exit();
 }

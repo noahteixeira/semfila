@@ -60,6 +60,20 @@ CREATE TABLE baladas (
         ON DELETE RESTRICT
 );
 
+--  tabela: produtos_bar
+CREATE TABLE produtos_bar (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    balada_id INT NOT NULL,
+    nome VARCHAR(150) NOT NULL,
+    preco DECIMAL(10,2) NOT NULL,
+    criado_em TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_produtos_bar_balada
+        FOREIGN KEY (balada_id) REFERENCES baladas (id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
+
 -- fk da tabela 'usuarios' na coluna 'balada_id' para tabela 'baladas' na coluna 'id'
 ALTER TABLE usuarios
     ADD CONSTRAINT fk_usuarios_balada
