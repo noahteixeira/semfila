@@ -6,8 +6,6 @@
 
     var menus = {
         baladeiro: [
-            { nome: "Início", icone: "fa-house", link: "area_baladeiro.html", id: "inicio" },
-            { separador: true },
             { nome: "Ver Eventos", icone: "fa-calendar", link: "ver_eventos.html", id: "eventos" },
             { nome: "Meus Ingressos", icone: "fa-ticket", link: "meus_ingressos.html", id: "ingressos" },
             { nome: "Minha Pulseira", icone: "fa-id-badge", link: "pulseira.html", id: "pulseira" },
@@ -21,8 +19,6 @@
             { nome: "Sair", icone: "fa-right-from-bracket", link: "../backend/logout.php", id: "sair" }
         ],
         gestor: [
-            { nome: "Início", icone: "fa-house", link: "area_gestor.html", id: "inicio" },
-            { separador: true },
             { titulo: "Eventos" },
             { nome: "Meus Eventos", icone: "fa-calendar", link: "listar_eventos.html", id: "eventos" },
             { nome: "Criar Evento", icone: "fa-circle-plus", link: "criar_evento.html", id: "criar-evento" },
@@ -43,8 +39,6 @@
             { nome: "Sair", icone: "fa-right-from-bracket", link: "../backend/logout.php", id: "sair" }
         ],
         funcionario: [
-            { nome: "Início", icone: "fa-house", link: "area_funcionario.html", id: "inicio" },
-            { separador: true },
             { nome: "Validar Entrada", icone: "fa-qrcode", link: "validar_entrada.html", id: "validar" },
             { nome: "Controle do Bar", icone: "fa-beer-mug-empty", link: "bar.html", id: "bar" },
             { nome: "Controle de Fila", icone: "fa-people-line", link: "controle_fila.html", id: "fila" },
@@ -52,8 +46,6 @@
             { nome: "Sair", icone: "fa-right-from-bracket", link: "../backend/logout.php", id: "sair" }
         ],
         admin: [
-            { nome: "Início", icone: "fa-house", link: "area_admin.html", id: "inicio" },
-            { separador: true },
             { nome: "Listar Gestores", icone: "fa-list", link: "listar_gestores.html", id: "gestores" },
             { nome: "Novo Gestor", icone: "fa-user-plus", link: "cadastrar_gestor.html", id: "cadastrar-gestor" },
             { nome: "Nova Balada", icone: "fa-store", link: "cadastrar_balada.html", id: "cadastrar-balada" },

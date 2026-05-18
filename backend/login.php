@@ -56,13 +56,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION["usuario_tipo"] = $usuario["tipo"];
 
             if ($usuario["tipo"] == "baladeiro") {
-                header("Location: ../frontend/area_baladeiro.html");
+                header("Location: ../frontend/ver_eventos.html");
             } elseif ($usuario["tipo"] == "gestor") {
-                header("Location: ../frontend/area_gestor.html");
+                header("Location: ../frontend/listar_eventos.html");
             } elseif ($usuario["tipo"] == "funcionario") {
-                header("Location: ../frontend/area_funcionario.html");
+                header("Location: ../frontend/validar_entrada.html");
             } elseif ($usuario["tipo"] == "admin") {
-                header("Location: ../frontend/area_admin.html");
+                header("Location: ../frontend/listar_gestores.html");
             }
             exit();
 
