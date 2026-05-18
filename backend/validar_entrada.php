@@ -22,6 +22,32 @@ if ($evento_id <= 0) {
     exit();
 }
 
+$sql_funcionario = "SELECT balada_id FROM usuarios WHERE id = ? AND tipo = 'funcionario' AND ativo = 1";
+$stmt_funcionario = mysqli_prepare($conexao, $sql_funcionario);
+mysqli_stmt_bind_param($stmt_funcionario, "i", $_SESSION["usuario_id"]);
+mysqli_stmt_execute($stmt_funcionario);
+$resultado_funcionario = mysqli_stmt_get_result($stmt_funcionario);
+$funcionario = mysqli_fetch_assoc($resultado_funcionario);
+mysqli_stmt_close($stmt_funcionario);
+
+if (!$funcionario || !$funcionario["balada_id"]) {
+    echo json_encode(["erro" => "Funcionário sem balada vinculada"]);
+    exit();
+}
+
+$sql_evento = "SELECT id FROM eventos WHERE id = ? AND balada_id = ? AND status = 'ativo'";
+$stmt_evento = mysqli_prepare($conexao, $sql_evento);
+mysqli_stmt_bind_param($stmt_evento, "ii", $evento_id, $funcionario["balada_id"]);
+mysqli_stmt_execute($stmt_evento);
+$resultado_evento = mysqli_stmt_get_result($stmt_evento);
+$evento = mysqli_fetch_assoc($resultado_evento);
+mysqli_stmt_close($stmt_evento);
+
+if (!$evento) {
+    echo json_encode(["erro" => "Evento inválido para este funcionário"]);
+    exit();
+}
+
 // primeiro tenta buscar como QR code
 $sql = "SELECT i.id, i.status, i.comprado_em, il.preco, e.id AS evento_id, e.idade_minima, e.nome AS evento_nome, 
                 u.id AS usuario_id, u.nome, u.data_nascimento, u.foto_perfil

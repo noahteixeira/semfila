@@ -34,6 +34,20 @@ if (!$balada) {
     exit();
 }
 
+$sql_check = "SELECT id FROM produtos_bar WHERE balada_id = ? AND nome = ?";
+$stmt_check = mysqli_prepare($conexao, $sql_check);
+mysqli_stmt_bind_param($stmt_check, "is", $balada["id"], $nome);
+mysqli_stmt_execute($stmt_check);
+$resultado_check = mysqli_stmt_get_result($stmt_check);
+
+if (mysqli_fetch_assoc($resultado_check)) {
+    mysqli_stmt_close($stmt_check);
+    mysqli_close($conexao);
+    echo json_encode(["erro" => "Produto já cadastrado no cardápio"]);
+    exit();
+}
+mysqli_stmt_close($stmt_check);
+
 $sql = "INSERT INTO produtos_bar (balada_id, nome, preco) VALUES (?, ?, ?)";
 $stmt = mysqli_prepare($conexao, $sql);
 mysqli_stmt_bind_param($stmt, "isd", $balada["id"], $nome, $preco);

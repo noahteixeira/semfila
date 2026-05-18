@@ -37,6 +37,20 @@
                 <label for="capacidade_maxima">Capacidade Máxima</label>
                 <input type="number" id="capacidade_maxima" name="capacidade_maxima" min="1" required>
 
+                <h3>Lote de Ingressos</h3>
+
+                <label for="nome_lote">Nome do Lote</label>
+                <input type="text" id="nome_lote" name="nome_lote" required>
+
+                <label for="preco_lote">Preço do Ingresso (R$)</label>
+                <input type="number" id="preco_lote" name="preco_lote" min="0.01" step="0.01" required>
+
+                <label for="taxa_plataforma">Taxa da Plataforma (R$)</label>
+                <input type="number" id="taxa_plataforma" name="taxa_plataforma" min="0" step="0.01" required>
+
+                <label for="quantidade_lote">Quantidade de Ingressos</label>
+                <input type="number" id="quantidade_lote" name="quantidade_lote" min="1" required>
+
                 <button type="submit">Salvar Alterações</button>
             </form>
         </div>

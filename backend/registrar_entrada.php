@@ -25,10 +25,27 @@ if ($metodo != "qr_code" && $metodo != "rfid") {
     $metodo = "qr_code";
 }
 
+$sql_funcionario = "SELECT balada_id FROM usuarios WHERE id = ? AND tipo = 'funcionario' AND ativo = 1";
+$stmt_funcionario = mysqli_prepare($conexao, $sql_funcionario);
+mysqli_stmt_bind_param($stmt_funcionario, "i", $_SESSION["usuario_id"]);
+mysqli_stmt_execute($stmt_funcionario);
+$resultado_funcionario = mysqli_stmt_get_result($stmt_funcionario);
+$funcionario = mysqli_fetch_assoc($resultado_funcionario);
+mysqli_stmt_close($stmt_funcionario);
+
+if (!$funcionario || !$funcionario["balada_id"]) {
+    echo json_encode(["erro" => "Funcionário sem balada vinculada"]);
+    exit();
+}
+
 // verificar se ingresso ainda esta disponivel
-$sql_check = "SELECT i.status FROM ingressos i INNER JOIN ingressos_lotes il ON i.lote_id = il.id WHERE i.id = ? AND il.evento_id = ?";
+$sql_check = "SELECT i.status
+              FROM ingressos i
+              INNER JOIN ingressos_lotes il ON i.lote_id = il.id
+              INNER JOIN eventos e ON il.evento_id = e.id
+              WHERE i.id = ? AND il.evento_id = ? AND e.balada_id = ? AND e.status = 'ativo'";
 $stmt_check = mysqli_prepare($conexao, $sql_check);
-mysqli_stmt_bind_param($stmt_check, "ii", $ingresso_id, $evento_id);
+mysqli_stmt_bind_param($stmt_check, "iii", $ingresso_id, $evento_id, $funcionario["balada_id"]);
 mysqli_stmt_execute($stmt_check);
 $resultado_check = mysqli_stmt_get_result($stmt_check);
 $ingresso = mysqli_fetch_assoc($resultado_check);
@@ -43,17 +60,27 @@ if (!$ingresso || $ingresso["status"] != "disponivel") {
 mysqli_begin_transaction($conexao);
 
 // atualizar status do ingresso para utilizado
-$sql = "UPDATE ingressos SET status = 'utilizado' WHERE id = ?";
+$sql = "UPDATE ingressos SET status = 'utilizado' WHERE id = ? AND status = 'disponivel'";
 $stmt = mysqli_prepare($conexao, $sql);
 mysqli_stmt_bind_param($stmt, "i", $ingresso_id);
-mysqli_stmt_execute($stmt);
+if (!mysqli_stmt_execute($stmt) || mysqli_affected_rows($conexao) == 0) {
+    mysqli_rollback($conexao);
+    mysqli_stmt_close($stmt);
+    echo json_encode(["erro" => "Ingresso não disponível ou já utilizado"]);
+    exit();
+}
 mysqli_stmt_close($stmt);
 
 // registrar entrada
 $sql_entrada = "INSERT INTO entradas (evento_id, ingresso_id, funcionario_id, metodo) VALUES (?, ?, ?, ?)";
 $stmt_entrada = mysqli_prepare($conexao, $sql_entrada);
 mysqli_stmt_bind_param($stmt_entrada, "iiis", $evento_id, $ingresso_id, $_SESSION["usuario_id"], $metodo);
-mysqli_stmt_execute($stmt_entrada);
+if (!mysqli_stmt_execute($stmt_entrada)) {
+    mysqli_rollback($conexao);
+    mysqli_stmt_close($stmt_entrada);
+    echo json_encode(["erro" => "Erro ao registrar entrada"]);
+    exit();
+}
 mysqli_stmt_close($stmt_entrada);
 
 // confirmar transacao

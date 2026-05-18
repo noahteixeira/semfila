@@ -125,6 +125,7 @@ adicionarBtn.addEventListener("click", function() {
     }
 
     itens.push({
+        id: parseInt(selected),
         nome: nome,
         quantidade: quantidade,
         valor_unitario: preco
@@ -153,10 +154,17 @@ confirmarBtn.addEventListener("click", function() {
     }
 
     var formData = new FormData();
+    var produtosEnvio = [];
+    itens.forEach(function(item) {
+        produtosEnvio.push({
+            id: item.id,
+            quantidade: item.quantidade
+        });
+    });
+
     formData.append("rfid", currentRfid);
     formData.append("evento_id", eventoId);
-    formData.append("produtos_json", JSON.stringify(itens));
-    formData.append("valor_total", total);
+    formData.append("produtos_json", JSON.stringify(produtosEnvio));
 
     fetch("../backend/registrar_consumo.php", {
         method: "POST",

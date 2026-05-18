@@ -36,11 +36,9 @@
             { nome: "Cardápio do Bar", icone: "fa-beer-mug-empty", link: "produtos_bar.html", id: "produtos-bar" },
             { separador: true },
             { titulo: "Relatórios" },
-            { nome: "Visão Geral", icone: "fa-chart-pie", link: "relatorios.html", id: "relatorios" },
+            { nome: "Relatórios", icone: "fa-chart-pie", link: "relatorios.html", id: "relatorios" },
             { nome: "Entradas", icone: "fa-door-open", link: "relatorio_entradas.html", id: "rel-entradas" },
             { nome: "Ingressos", icone: "fa-ticket", link: "relatorio_ingressos.html", id: "rel-ingressos" },
-            { nome: "Dashboard do Bar", icone: "fa-martini-glass", link: "relatorio_bar.html", id: "rel-bar" },
-            { nome: "Resumo", icone: "fa-file-lines", link: "relatorio_geral.html", id: "rel-geral" },
             { separador: true },
             { nome: "Sair", icone: "fa-right-from-bracket", link: "../backend/logout.php", id: "sair" }
         ],

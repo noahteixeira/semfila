@@ -50,10 +50,13 @@ fetch("../backend/listar_eventos.php")
             var dataFormatada = e.data_evento.split("-").reverse().join("/");
             var badgeClass = "badge-" + e.status;
 
-            var acoes = '<a href="editar_evento.html?id=' + e.id + '" class="btn-acao btn-editar">Editar</a>';
+            var acoes = '';
             if (e.status == "ativo") {
+                acoes += '<a href="editar_evento.html?id=' + e.id + '" class="btn-acao btn-editar">Editar</a>';
                 acoes += ' <a href="../backend/encerrar_evento.php" class="btn-acao btn-encerrar" onclick="return confirmarEncerrar(' + e.id + ', \'encerrar\')">Encerrar</a>';
                 acoes += ' <a href="../backend/encerrar_evento.php" class="btn-acao btn-encerrar" onclick="return confirmarEncerrar(' + e.id + ', \'cancelar\')">Cancelar</a>';
+            } else {
+                acoes = '-';
             }
 
             var tr = document.createElement("tr");

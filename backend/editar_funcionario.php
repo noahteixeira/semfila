@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"])) {
 
     $id = intval($_GET["id"]);
 
-    $sql = "SELECT id, nome, email, ativo FROM usuarios WHERE id = ? AND tipo = 'funcionario' AND balada_id = ?";
+    $sql = "SELECT id, nome, email, ativo FROM usuarios WHERE id = ? AND tipo = 'funcionario' AND balada_id = ? AND ativo = 1";
     $stmt = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($stmt, "ii", $id, $balada["id"]);
     mysqli_stmt_execute($stmt);
@@ -69,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     mysqli_stmt_close($stmt_check);
 
     // verificar se funcionario pertence a balada do gestor
-    $sql_verificar = "SELECT id FROM usuarios WHERE id = ? AND tipo = 'funcionario' AND balada_id = ?";
+    $sql_verificar = "SELECT id FROM usuarios WHERE id = ? AND tipo = 'funcionario' AND balada_id = ? AND ativo = 1";
     $stmt_verificar = mysqli_prepare($conexao, $sql_verificar);
     mysqli_stmt_bind_param($stmt_verificar, "ii", $id, $balada["id"]);
     mysqli_stmt_execute($stmt_verificar);
