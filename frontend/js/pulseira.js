@@ -38,6 +38,59 @@ function carregarPulseira() {
         });
 }
 
+function limparQueryPagamento() {
+    if (window.history && window.history.replaceState) {
+        window.history.replaceState({}, document.title, "pulseira.html");
+    }
+}
+
+function confirmarPagamentoStripe(sessionId) {
+    fetch("../backend/stripe_confirmar_recarga.php?session_id=" + encodeURIComponent(sessionId))
+        .then(function(response) { return response.json(); })
+        .then(function(data) {
+            if (data.erro) {
+                msgErro.textContent = data.erro;
+                msgErro.style.display = "block";
+                msgSucesso.style.display = "none";
+                limparQueryPagamento();
+                return;
+            }
+
+            if (data.sucesso) {
+                msgSucesso.textContent = "Pagamento confirmado! Novo saldo: R$ " + parseFloat(data.novo_saldo).toFixed(2);
+                msgSucesso.style.display = "block";
+                msgErro.style.display = "none";
+                carregarPulseira();
+                limparQueryPagamento();
+            }
+        })
+        .catch(function(error) {
+            console.error("Erro:", error);
+            msgErro.textContent = "Erro ao confirmar pagamento.";
+            msgErro.style.display = "block";
+            msgSucesso.style.display = "none";
+            limparQueryPagamento();
+        });
+}
+
+function verificarRetornoPagamento() {
+    var params = new URLSearchParams(window.location.search);
+    var statusPagamento = params.get("pagamento");
+    var sessionId = params.get("session_id");
+
+    if (statusPagamento == "cancelado") {
+        msgErro.textContent = "Pagamento cancelado.";
+        msgErro.style.display = "block";
+        msgSucesso.style.display = "none";
+        limparQueryPagamento();
+        return;
+    }
+
+    if (statusPagamento == "sucesso" && sessionId) {
+        confirmarPagamentoStripe(sessionId);
+    }
+}
+
 // assinar pulseira
 document.getElementById("btn-assinar").addEventListener("click", function() {
     if (!confirm("Deseja assinar a pulseira por R$ 19,90/mês?")) {
@@ -72,11 +125,19 @@ document.getElementById("btn-assinar").addEventListener("click", function() {
 document.getElementById("form-saldo").addEventListener("submit", function(e) {
     e.preventDefault();
 
-    var formData = new FormData();
-    formData.append("acao", "adicionar_saldo");
-    formData.append("valor", document.getElementById("valor").value);
+    var valor = parseFloat(document.getElementById("valor").value);
+    if (isNaN(valor) || valor <= 0) {
+        msgErro.textContent = "Valor inválido";
+        msgErro.style.display = "block";
+        msgSucesso.style.display = "none";
+        return;
+    }
 
-    fetch("../backend/atualizar_pulseira.php", {
+    var formData = new FormData();
+    formData.append("valor", valor.toFixed(2));
+    formData.append("origem", "pulseira");
+
+    fetch("../backend/stripe_criar_checkout_recarga.php", {
         method: "POST",
         body: formData
     })
@@ -89,12 +150,8 @@ document.getElementById("form-saldo").addEventListener("submit", function(e) {
             return;
         }
 
-        if (data.sucesso) {
-            msgSucesso.textContent = "Saldo adicionado! Novo saldo: R$ " + parseFloat(data.novo_saldo).toFixed(2);
-            msgSucesso.style.display = "block";
-            msgErro.style.display = "none";
-            document.getElementById("valor").value = "";
-            carregarPulseira();
+        if (data.sucesso && data.checkout_url) {
+            window.location.href = data.checkout_url;
         }
     })
     .catch(function(error) {
@@ -167,3 +224,4 @@ document.getElementById("btn-cancelar").addEventListener("click", function() {
 });
 
 carregarPulseira();
+verificarRetornoPagamento();
